@@ -1,0 +1,58 @@
+------------------------------------------------------------------------------ -
+AUTHOR:
+Jon Sherwood
+CLASS:
+CS 4760 - Operating Systems
+ASSIGNMENT 2
+DUE DATE:
+February 24, 2016
+FILES:
+master.c slave.c shared.h
+------------------------------------------------------------------------------ -
+
+OVERVIEW:
+The goal of this homework is to become familiar with concurrent
+processing in Unix / Linux using shared memory.
+
+The program uses multiple processes to write a message into a file while
+indexing forked/execed processes to shared memory. 
+
+
+BUILD:
+	make
+RUN:
+	./master
+OPTIONS:
+	-h  help
+	-n  [# of children 1 to 19] default is 19
+	-t  [# of secs for child timeout] default is 
+60------------------------------------------------------------------------------ -
+AUTHOR:
+Jon Sherwood
+CLASS:
+CS 4760 - Operating Systems
+ASSIGNMENT 2
+DUE DATE:
+February 24, 2016
+FILES:
+master.c slave.c shared.h
+------------------------------------------------------------------------------ -
+
+OVERVIEW:
+The goal of this homework is to become familiar with concurrent
+processing in Unix / Linux using shared memory.
+
+The program uses multiple processes to write a message into a file while
+indexing forked/execed processes to shared memory. 
+
+
+BUILD:
+	make
+RUN:
+	./master
+OPTIONS:
+	-h  help
+	-n  [# of children 1 to 19] default is 19
+	-t  [# of secs for child timeout] default is 60
+[o3-sherwood@~/o3-sherwood.2]$ 
+

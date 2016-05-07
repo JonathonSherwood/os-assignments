@@ -1,0 +1,76 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.01.31.03.44.58;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@$Name$ Jon Sherwood
+This is the header file for assignment 1.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#include <stdbool.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <semaphore.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <errno.h>
+#include <ctype.h>
+#include <unistd.h>
+#include <time.h>
+#include "liblogger.h"
+
+#define DEBUG 1
+char *logfile ={"./logfile"};
+char logger[BUFSIZ];
+#define debug(M, ...) sprintf(logger, "%s:line %d:" M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+
+int main(int argc, char *argv[]) {
+	int x;
+	char *hello = "hello, world!" + 13;
+	char *charstring = 'h' + "ello, world!";
+	char *m={"hello crappy code"};
+	debug("Entering bad code");
+	loginput(logger);
+L:
+	srand(time(NULL) ^ (getpid()<<16));
+	int r=rand()%20;
+	printf ("%s",m++);
+	printf ("%d hello =%c, charstring=%s.\n", x,hello[r], charstring+r);
+	x++;
+	if (x<29) {
+		goto L;
+	}
+
+	debug("Exiting bad code");
+	loginput(logger);
+    savelog(logfile);
+    return 0;
+error:
+	debug("Reached error marker");
+	loginput(logger);
+    savelog(logfile);
+    return 1;
+}
+
+@

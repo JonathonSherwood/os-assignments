@@ -1,0 +1,48 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2016.03.17.19.55.25;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@CC			= gcc
+CFLAGS		= -g -Wall
+TGTS		= oss slave
+SRCS		= oss.c slave.c
+OBJS		= $(SRCS:.c=.o)
+
+all:		$(TGTS) scrub
+.PHONY:		all
+
+# Suffix replacement rule for building all object files
+.c.o:
+	$(CC) -c $(CFLAGS) -o $@@ $<
+
+#oss:oss.o
+#	$(CC) -o $@@ $<
+
+#slave:slave.o
+#	$(CC) -o $@@ $<
+
+.PHONY: scrub clean
+scrub:
+	rm -f *.o
+clean:
+	rm -f $(OBJS) *.log $(TGTS)
+@

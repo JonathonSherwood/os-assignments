@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2016.03.17.19.55.35;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#!/bin/bash
+
+
+for y in `ipcs -s | grep $USER| cut -f2 -d" "`; do ipcrm -s $y; clear_pcb
+
+for y in `ipcs -m | grep $USER| cut -f2 -d" "`; do ipcrm --shmem-id=$y; clear_pcb
+
+
+
+@

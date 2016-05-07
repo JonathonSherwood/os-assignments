@@ -1,0 +1,633 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.04.28.22.21.24;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@This is nearly done. I lost the older backup.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/* JON SHERWOOD - CS 4760 - ASSIGNMENT 6 - MEMORY MANAGEMENT */
+
+
+/*
+page tables - fixed sized arrays,  each process <   32K memory,  each page
+being 1K.  page table  should declare its size your programs do not access
+memory beyond the page table limit. The page table should have all the
+required fields that may be implemented by bits or character data types.
+Assume that your system has a total memory of 256K. Use a bit vector to
+keep track of the unallocated frames.  After the resources have been set
+up, fork a user process at random times (between 1 and 500 milliseconds
+of your */
+
+#include "shared.h"
+
+void signal_handler();
+void signal_init();
+void alarm_handler();
+void init_sem();
+void remove_sem();
+void shared_mem_init();
+void shared_mem_attach();
+void remove_shared_memory();
+void page_table_signal();
+void clock_adv(long , long);
+
+pid_t r_wait(int *);
+int lru_find_oldest();
+void page_table_set(int);
+void page_faults();
+void queue_rearrange();
+int open_slot();
+void display_pages_memory();
+
+char msg[50];
+struct timeval tv;
+key_t global_key = IPC_PRIVATE;
+page_table_t *page_table;
+mem_reference_t *mem_reference;
+user_page_t *page;
+sem_t *clock_sem;
+sem_t *mem_ref_sem;
+sem_t *page_table_sem;
+sem_t *oss_sem;
+
+page_data_t *page_queue[NUM_FRAMES];
+logical_clock_t *logical_clock;
+
+int shm_clock_id;
+int shm_page_table_id;
+int mem_ref_id;
+int page_id;
+int sem_clock_id;
+int sem_ref_id;
+int sem_page_table_id;
+int sem_oss_id;
+int tail = 0;
+int number_of_procs;
+
+
+void alarm_handler() {
+	fprintf(stderr, "\nTimer Elapsed\n");
+	// cleanup (SIGINT);
+	remove_sem();
+	remove_shared_memory();
+	fprintf(stderr, "OSS: Terminating\n");
+	int i;
+	int status;  // Hold status from wait()
+	for (i = 1; i < number_of_procs;  i++) {
+		sprintf(msg, "Sending SIGINT to child %02d PID %d", i,
+				pids[i]);
+		writelog(msg);
+		fprintf(stderr, "%s\n", msg);
+		kill(pids[i], SIGINT);
+		r_wait(&status);
+		sprintf(msg, "Child %02d returned %d\n", i, WEXITSTATUS(status));
+		writelog(msg);
+		// fprintf(stderr, "%s", msg);
+		fprintf(stderr, "%s\n", msg);
+	}
+	raise(SIGTERM);
+	// system("./clean.sh");
+	// system("killall user");
+	// exit(1);
+}
+
+int main(int argc, char **argv) {
+	int i;
+	int c;
+	const char     *short_opt = "hn:";
+	number_of_procs = DEFAULT_CHILD_COUNT;
+	struct option   long_opt[] = {
+		{"help",          no_argument,       NULL, 'h'},
+		{"number",        required_argument, NULL, 'n'},
+		{NULL,            0,                 NULL, 0  }
+	};
+	while ((c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1)   {
+		switch (c) {
+			case -1:        //  no more arguments
+			case  0:        //  long options toggles
+				break;
+			case 'n':
+				// validate numeric input
+				for (i = 0; i < strlen(optarg); i++) {
+					if (isdigit(optarg[i])) {
+						fprintf(stderr, "Invalid input: %c not a digit \n", optarg[i]);
+						return (-2);
+					}
+				}
+				number_of_procs = atoi(optarg);
+				// fix and allow more processeses to be qyeued for hard limit of 18 in system
+				if ((number_of_procs < 1) || (number_of_procs > 18)) {
+					fprintf(stderr, "Invalid number of processeses. ");
+					fprintf(stderr, "Using default value of 18\n");
+					number_of_procs =  DEFAULT_CHILD_COUNT;
+				}
+				break;
+			case 'h':        // help
+				fprintf(stderr, "Usage: %s [OPTIONS]\n", argv[0]);
+				fprintf(stderr, "  -n, --number              number of processeses\n");
+				fprintf(stderr, "  -h, --help                print this help and exit\n\n");
+				return (0);
+			case ':':
+			case '?':
+				if (optopt == 'n') {
+					fprintf(stderr, "Option -%c requires an argument.\n", optopt);
+					exit(EXIT_FAILURE);
+				} else if (isprint(optopt)) {
+					fprintf(stderr, "Unknown option `-%c'.\n", optopt);
+					exit(EXIT_FAILURE);
+				} else {
+					fprintf(stderr, "Unknown option character `\\x%x'.\n", optopt);
+					exit(EXIT_FAILURE);
+				}
+			default:
+				abort();
+		}
+	}
+	//  make sure no more arguments. if so exit
+	for (i = optind; i < argc; i++) {
+		fprintf(stderr,"Non-option argument %s\n", argv[i]);
+		exit(EXIT_FAILURE);
+	}
+
+
+	signal_init();
+	/* ALARM */
+	if (signal(SIGALRM, &alarm_handler) == SIG_ERR) {
+		fprintf(stderr, "Can't catch SIGALRM\n");
+		exit(EXIT_FAILURE);
+	}
+	alarm(GLOBAL_TIMEOUT);
+
+	/* INITIALIZE SHARED MEMORY AND SEMAPHORES */
+	shared_mem_init();
+	shared_mem_attach();
+	init_sem();
+
+	srand(time(NULL));
+	logical_clock->sec = 0;
+	logical_clock->nsec = 0;
+
+	/* FORKING */
+	// *** fix and allow more processeses to be qyeued for hard limit of 18 in system
+	for (i = 0; i < number_of_procs; i++) {
+		int random_fork_time = (1000 + rand() % 500000); // fork process randomly 1 - 500 ms
+		clock_adv(0, random_fork_time); // increments clock
+		struct timespec sleeptime;
+		sleeptime.tv_sec = 0;
+		sleeptime.tv_nsec = random_fork_time;
+		nanosleep(&sleeptime, NULL);
+		sprintf(msg, "Forking child #%d", i);
+		writelog(msg);
+		fprintf(stderr, "%s\n", msg);
+
+		int childpid = fork();
+		if (childpid  == -1) {
+			perror("fork");
+			return 1;
+		} else {
+			if (childpid == 0) {
+				char arg1[10];
+				sprintf(arg1, "%d", i);
+				char arg2[10];
+				sprintf(arg2, "%d", shm_clock_id);
+				char arg3[10];
+				sprintf(arg3, "%d", sem_clock_id);
+				char arg4[10];
+				sprintf(arg4, "%d", shm_page_table_id);
+				char arg5[10];
+				sprintf(arg5, "%d", sem_page_table_id);
+				char arg6[10];
+				sprintf(arg6, "%d", mem_ref_id);
+				char arg7[10];
+				sprintf(arg7, "%d", sem_ref_id);
+				char arg8[10];
+				sprintf(arg8, "%d", page_id);
+				char arg9[10];
+				sprintf(arg9, "%d", sem_oss_id);
+				execl("user", "user", arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9,
+					  NULL);
+				perror("exec user");
+				return 1;
+			}
+		}
+	}
+	while (r_wait(NULL) > 0) ; // wait for children
+	remove_sem();
+	remove_shared_memory();
+	fprintf(stderr, "oss: exiting \n");
+// #include <malloc.h>
+//  malloc_stats();
+	execl("./clean.sh", "clean.sh", NULL, NULL);
+	return 0;
+}
+
+
+pid_t r_wait(int *stat_loc) {
+	int retval;
+	while (((retval = wait(stat_loc)) == -1) && (errno == EINTR))
+		;
+	return retval;
+}
+
+void shared_mem_init() {
+	size_t shm_size_logical_clock = sizeof(struct timespec);
+	if ((shm_clock_id = shmget(global_key, shm_size_logical_clock, SEM_FLAGS)) == -1) {
+		perror("shmget: shm_clock_id failed");
+		exit(1);
+	}
+	size_t sem_size_logical_clock = sizeof(sem_t);
+	if ((sem_clock_id = shmget(global_key, sem_size_logical_clock,
+							   SEM_FLAGS)) == -1) {
+		perror("shmget: sem_clock_id failed");
+		exit(1);
+	}
+	size_t shm_size_page_table = sizeof(page_table_t);
+	if ((shm_page_table_id = shmget(global_key, shm_size_page_table, SEM_FLAGS)) == -1) {
+		perror("shmget: shm_page_table_id failed");
+		exit(1);
+	}
+	size_t sem_size_page_table = sizeof(sem_t);
+	if ((sem_page_table_id = shmget(global_key, sem_size_page_table,
+									SEM_FLAGS)) == -1) {
+		perror("shmget: sem_page_table_id failed");
+		exit(1);
+	}
+	size_t shm_size_memory = sizeof(mem_reference_t);
+	if ((mem_ref_id = shmget(global_key, shm_size_memory, SEM_FLAGS)) == -1) {
+		perror("shmget: mem_ref_id failed");
+		exit(1);
+	}
+	size_t sem_size_memory = sizeof(sem_t);
+	if ((sem_ref_id = shmget(global_key, sem_size_memory, SEM_FLAGS)) == -1) {
+		perror("shmget: sem_ref_id failed");
+		exit(1);
+	}
+	size_t shm_size_page = sizeof(user_page_t);
+	if ((page_id = shmget(global_key, shm_size_page, SEM_FLAGS)) == -1) {
+		perror("shmget: page_id failed");
+		exit(1);
+	}
+	size_t sem_size_oss = sizeof(sem_t);
+	if ((sem_oss_id = shmget(global_key, sem_size_oss, SEM_FLAGS)) == -1) {
+		perror("shmget: sem_oss_id failed");
+		exit(1);
+	}
+}
+
+void shared_mem_attach() {
+	if ((logical_clock = (logical_clock_t *)shmat(shm_clock_id, NULL,  0)) == (void *) - 1) {
+		perror("shmat: logical_clock attachment failed");
+		exit(1);
+	}
+	if ((clock_sem = (sem_t *)shmat(sem_clock_id, NULL,
+									0)) == (void *) - 1) {
+		perror("shmat: clock_sem attachment failed");
+		exit(1);
+	}
+	if ((page_table = (page_table_t *)shmat(shm_page_table_id, NULL,
+											0)) == (void *) - 1) {
+		perror("shmat: page_table attachment failed");
+		exit(1);
+	}
+	if ((page_table_sem = (sem_t *)shmat(sem_page_table_id, NULL,
+										 0)) == (void *) - 1) {
+		perror("shmat: page_table_sem attachment failed");
+		exit(1);
+	}
+	if ((mem_reference = (mem_reference_t *)shmat(mem_ref_id, NULL,
+						 0)) == (void *) - 1) {
+		perror("shmat: mem_reference attachment failed");
+		exit(1);
+	}
+	if ((mem_ref_sem = (sem_t *)shmat(sem_ref_id, NULL,
+									  0)) == (void *) - 1) {
+		perror("shmat: mem_ref_sem attachment failed");
+		exit(1);
+	}
+	if ((page = (user_page_t *)shmat(page_id, NULL,
+									 0)) == (void *) - 1) {
+		perror("shmat: page attachment failed");
+		exit(1);
+	}
+	if ((oss_sem = (sem_t *)shmat(sem_oss_id, NULL,
+								  0)) == (void *) - 1) {              //oss_sem
+		perror("shmat: oss_sem attachment failed");
+		exit(1);
+	}
+}
+
+void remove_shared_memory() {
+	if (shmctl(shm_clock_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: shm_clock_id removal failed");
+		exit(1);
+	}
+	if (shmctl(sem_clock_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: sem_clock_id removal failed");
+		exit(1);
+	}
+	if (shmctl(shm_page_table_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: shm_page_table_id removal failed");
+		exit(1);
+	}
+	if (shmctl(sem_page_table_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: sem_page_table_id removal failed");
+		exit(1);
+	}
+	if (shmctl(mem_ref_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: mem_ref_id removal failed");
+		exit(1);
+	}
+	if (shmctl(sem_ref_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: sem_ref_id removal failed");
+		exit(1);
+	}
+	if (shmctl(page_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: page_id removal failed");
+		exit(1);
+	}
+	if (shmctl(sem_oss_id, IPC_RMID, NULL) == -1) {
+		perror("shmctl: sem_oss_id removal failed");
+		exit(1);
+	}
+}
+
+void init_sem() {
+	if (sem_init(clock_sem, 1, 1) == -1) {
+		perror("sem_init: Failed to initialize clock_sem");
+		exit(1);
+	}
+	if (sem_init(mem_ref_sem, 1, 1) == -1) {
+		perror("sem_init: Failed to initialize mem_ref_sem");
+		exit(1);
+	}
+	if (sem_init(page_table_sem, 1, 1) == -1) {
+		perror("sem_init: Failed to initialize page_table_sem");
+		exit(1);
+	}
+	if (sem_init(oss_sem, 1, 0) == -1) {
+		perror("sem_init: Failed to initialize oss_sem");
+		exit(1);
+	}
+}
+
+void remove_sem() {
+	if (sem_destroy(clock_sem) == -1) {
+		perror("sem_destroy: Failed to destroy clock_sem");
+		exit(1);
+	}
+	if (sem_destroy(mem_ref_sem) == -1) {
+		perror("sem_destroy: Failed to destroy mem_ref_sem");
+		exit(1);
+	}
+	if (sem_destroy(page_table_sem) == -1) {
+		perror("sem_destroy: Failed to destroy page_table_sem");
+		exit(1);
+	}
+	if (sem_destroy(oss_sem) == -1) {
+		perror("sem_destroy: Failed to destroy oss_sem");
+		exit(1);
+	}
+}
+
+void signal_init() {
+	fprintf(stderr, "OSS: Preparing Signals\n");
+	struct sigaction sigint;
+	sigint.sa_handler = signal_handler;
+	sigint.sa_flags = 0;
+	if (sigaction(SIGINT, &sigint, NULL) == -1) {
+		perror("signal_init: SIGINT");
+	}
+	struct sigaction page_table_sig;
+	page_table_sig.sa_handler = page_table_signal;
+	page_table_sig.sa_flags = 0;
+	if (sigaction(SIGUSR1, &page_table_sig, NULL) == -1) {
+		perror("signal_init: SIGUSR");
+		exit(1);
+	}
+}
+
+void signal_handler() {
+	fprintf(stderr, "Caught CONTROL-C\n");
+	remove_sem();
+	remove_shared_memory();
+	fprintf(stderr, "Exiting\n");
+	raise(SIGTERM);
+	// exit(1);
+}
+
+void page_table_signal() {
+	int rw = mem_reference->rw;     // read - 0, write - 1
+	int address = mem_reference->address;
+	int childNum = mem_reference->child_index;
+	sprintf(msg, "Checking Page Reference");
+	writelog(msg);
+	fprintf(stderr, "%s\n", msg);
+	int i;
+	for (i = 0; i < NUM_FRAMES; i++) {
+		int index = page_table->entries[i].child_index;
+		int page = page_table->entries[i].page_num;
+		int valid = page_table->entries[i].valid;
+		if ((index == childNum) && (page == address) && (valid == 1)) {
+			gettimeofday(&tv, NULL);
+			u_int64_t now = tv.tv_sec * 1000000ULL + tv.tv_usec;
+			page_table->entries[i].reference_time = now;
+			clock_adv(0, 10); // no page fault, oss just increments the clock by 10 ns
+			sprintf(msg, "Hit - Page %d Found", page);
+			writelog(msg);
+			fprintf(stderr, "%s\n", msg);
+			if (rw == 0) {
+				sprintf(msg, "Read [%d]\n", i);
+				writelog(msg);
+				fprintf(stderr, "%s ", msg);
+				page_table->entries[i].reference = 1;
+			}
+			if (rw == 1) {
+				sprintf(msg, "Write [%d]\n", i);
+				writelog(msg);
+				fprintf(stderr, "%s\n", msg);
+				page_table->entries[i].dirty = 1;
+			}
+			if (sem_post(oss_sem) == -1) {
+				perror("sem_post: oss sem");
+				exit(1);
+			}
+			// return;
+		}
+	}
+	// Page Fault: In case of page fault,
+	// oss queues the request to the device. Each request for disk read/write
+	// takes about 15ms to be fulfilled. In case of page fault, the request
+	// is queued for the device and the process is suspended as no signal is
+	// sent on the semaphore. The request at the head of the queue is fulfilled
+	// once the clock has advanced by disk read/write time since the time the
+	// request was found at the head of the queue.
+	sprintf(msg, "Page Fault ");
+	writelog(msg);
+	fprintf(stderr, "%s\n", msg);
+	page_faults();
+	clock_adv(0, 15000000);
+	display_pages_memory();
+	if (sem_post(oss_sem) == -1) {
+		perror("sem_post: Failed to signal oss_sem");
+		exit(1);
+	}
+}
+
+void clock_adv(long sec, long nsec) {
+	if (sem_wait(clock_sem) == -1) {
+		perror("sem_wait: Failed to wait on clock_sem");
+		exit(1);
+	}
+	//advance time for parent
+	logical_clock->sec += sec;
+	logical_clock->nsec += nsec;
+	if (logical_clock->nsec >= 1000000000) {
+		logical_clock->sec++;
+		logical_clock->nsec -= 1000000000;
+	}
+	if (sem_post(clock_sem) == -1) {
+		perror("sem_post: Failed to signal clock_sem");
+		exit(1);
+	}
+}
+
+void page_faults() {
+	if (sem_wait(page_table_sem) == -1) {
+		perror("sem_wait: Failed to wait on page_table_sem");
+		exit(1);
+	}
+	int page_index;
+	// when all pages are valid and in use, there is no available page
+	if ((page_index = open_slot()) == -1) {
+		sprintf(msg, "Page swap");
+		writelog(msg);
+		fprintf(stderr, "%s\n", msg);
+		//then, lru_find_oldest picks a page to kick out.
+		page_table_set(lru_find_oldest());
+	} else {
+
+		sprintf(msg, "Inserting into page table");
+		writelog(msg);
+		fprintf(stderr, "%s\n", msg);
+		page_table_set(page_index);
+	}
+	if (sem_post(page_table_sem) == -1) {
+		perror("sem_post: Failed to signal page_table_sem");
+		exit(1);
+	}
+}
+
+int open_slot() {
+	int i;
+	for (i = 0; i < NUM_FRAMES; i++) {
+		if (page_table->entries[i].valid == 0) {
+			//fprintf(stderr,"%d is available.\n", i);
+			return i;
+		}
+	}
+	return -1;
+}
+
+int lru_find_oldest() {
+	int i;
+	int max_time_index = 0;
+	for (i = 1; i < NUM_FRAMES; i++) {
+		if (page_table->entries[i].reference_time > page_table->entries[max_time_index].reference_time) {
+			max_time_index = i;
+		}
+		int table_index = page_queue[max_time_index]->table_index;
+		if (page_queue[max_time_index]->reference == 1) {
+			fprintf(stderr, "Saved: [%d]\n", table_index);
+			page_queue[max_time_index]->reference = 0;
+			// continue;
+		// } else if (page_queue[max_time_index]->reference == 0) {
+		} else {
+
+			fprintf(stderr, "Removed: [%d]\n", table_index);
+			page_table->entries[table_index].valid = 0;
+			page_queue[max_time_index] = NULL;
+			queue_rearrange(max_time_index);
+			return table_index;
+		}
+	}
+	return page_queue[max_time_index]->table_index;
+	// exit(0);
+}
+
+
+
+void page_table_set(int page_index) {
+
+	fprintf(stderr, "child %2d adding page %2d\n", page->child_index, page->page_num);
+	page_table->entries[page_index].page_num = page->page_num;
+	page_table->entries[page_index].child_index = page->child_index;
+	page_table->entries[page_index].range[0] = page->range[0];
+	page_table->entries[page_index].range[1] = page->range[1];
+	page_table->entries[page_index].valid = 1;
+	gettimeofday(&tv, NULL);
+	u_int64_t now = tv.tv_sec * 1000000ULL + tv.tv_usec;
+	page_table->entries[page_index].reference_time = now;
+	//update free frames vector?
+	if (tail < NUM_FRAMES) {
+		page_queue[tail] = &(page_table->entries[page_index]);
+		page_queue[tail]->table_index = page_index;
+		tail++;
+	}
+}
+
+void queue_rearrange(int index) {
+
+	int i;
+	for (i = index; i < NUM_FRAMES; i++) {
+		if (i == tail) {
+			page_queue[i] = NULL;
+			break;
+		}
+
+		else {
+			page_queue[i] = page_queue[i + 1];
+		}
+	}
+	tail--;
+}
+
+// print memory map of pages
+void display_pages_memory() {
+	int i;
+	fprintf(stderr, "Current Memory Map\n");
+	for (i = 0; i < NUM_FRAMES; i++) {
+		// display unallocated frames by a period.
+		if (page_table->entries[i].valid == 0) {
+			fprintf(stderr, "[%02d]\t  .\t", i);
+		} else {
+			fprintf(stderr, "[%2d]\tpg #%2d\t", i, page_table->entries[i].page_num);
+		}
+		// newline every 5
+		if (((i + 1) % 5) == 0) {
+			fprintf(stderr, "\n");
+		}
+	}
+	fprintf(stderr, "\n");
+	for (i = 0; i < NUM_FRAMES; i++) {
+		fprintf(stderr, ".....");
+	}
+	fprintf(stderr, "\n");
+}
+@

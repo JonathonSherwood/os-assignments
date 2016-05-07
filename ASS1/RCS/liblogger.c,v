@@ -1,0 +1,183 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.01.31.03.44.23;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@$NAME$ Jon Sherwood
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <errno.h>
+#include <ctype.h>
+#include <unistd.h>
+//#include "liblogger.h"
+
+#include <time.h>
+typedef struct data_struct {
+	time_t time;
+	char *string;
+} data_t;
+int addmsg (data_t );
+void clearlog (void);
+char *getlog (void);
+int savelog (char *filename);
+
+typedef struct list_struct {
+	data_t item;
+	struct list_struct *next;
+} log_t;
+
+static log_t *headptr = NULL;
+static log_t *tailptr = NULL;
+
+/* allocate node for data and add to end of list */
+int addmsg (data_t data) {
+	log_t *newnode;
+	size_t nodesize = sizeof (log_t) + strlen (data.string) + 1;
+	if ((newnode = (log_t *) (malloc (nodesize))) == NULL) {
+		/* couldn't add node */
+		perror ("addmsg: malloc error. couldn't add node");
+		exit (EXIT_FAILURE);
+	}
+	newnode->item.time = data.time;
+	newnode->item.string = (char *) newnode + sizeof (log_t);
+	strcpy (newnode->item.string, data.string);
+	newnode->next = NULL;
+	if (headptr == NULL) {
+		headptr = newnode;
+	} else {
+		tailptr->next = newnode;
+	}
+	tailptr = newnode;
+	return 1;
+}
+
+/*releases all the storage that has been allocated for the
+logged messages and empties the list of logged messages*/
+void clearlog (void) {
+	log_t *next = headptr;
+	while (next != NULL) {
+		next = headptr->next;
+		free (headptr);
+		headptr = next;
+	}
+}
+
+/*getlog allocates enough space for a string containing the entire log, copies
+the log into this string, and returns a pointer to the string. I t is the
+responsibility of the calling program to free this memory when necessary.*/
+char *getlog (void) {
+	size_t len = 0;
+	size_t msglength;
+	size_t offset;
+	log_t *node = headptr;
+	char *log;
+	offset = 0;
+	/* get length of all strings. total log size */
+	while (node != NULL) {
+		len += strlen (node->item.string);
+		len++;
+		node = node->next;
+	}
+	/* allocate memory for the log as one string */
+	if ((log = malloc (len)) == NULL) {
+		perror ("getlog: malloc error allocating memory for getlog");
+		exit (EXIT_FAILURE);
+	}
+
+	node = headptr;
+	/* add node data to log string */
+	while (node) {
+		msglength = strlen (node->item.string);
+		memcpy (log + offset, node->item.string, msglength);
+		offset += msglength;
+		memcpy (log + offset, "\n", 1);
+		offset++;
+		node = node->next;
+	}
+	/* add EOF to log string */
+	memcpy (log + offset - 1, "\0", 1);
+	return log;
+}
+/*function saves the logged messages to a disk file.*/
+int savelog (char *filename) {
+	FILE *fp;
+	log_t *node;
+	if (filename == NULL) {
+		perror ("savelog:error opening logfile");
+		exit (EXIT_FAILURE);
+
+	}
+	fp = fopen (filename, "a");
+	/* open file for writing log */
+	if (fp == NULL) {
+		perror ("savelog: failed to open logfile");
+		exit (EXIT_FAILURE);
+	}
+	node = headptr;
+	/* can't access a completely empty list */
+	if (headptr == NULL) {
+		perror ("savelog: empty list ");
+		exit (EXIT_FAILURE);
+	}
+	/* write time of command string to log */
+	while (node) {
+		char tm[25];
+		strftime(tm,25,"%a %b %d %I:%M:%S %p",localtime ((&node->item.time)));
+		fprintf (fp, "%s\t %s\n", tm, node->item.string);
+		node = node->next;
+	}
+	if (fclose (fp)) {
+		perror ("savelog: fclose failed in savelog");
+		exit (EXIT_FAILURE);
+	}
+	return 0;
+}
+
+/* execute cmd; store cmd and time in history list */
+int runproc (char *cmd) {
+	data_t execute;
+	if (time (& (execute.time)) == -1) {
+		perror ("runproc: cmd time execute error");
+		return EXIT_FAILURE;
+	}
+	execute.string = cmd;
+	/* command could not be executed at all */
+	if (system (cmd) == -1) {
+		perror ("runproc: Failed to execute command");
+		exit (EXIT_FAILURE);
+	}
+	return addmsg (execute);
+}
+
+
+void loginput (char *cmd) {
+	data_t errlog;
+		if (* (cmd + strlen (cmd) - 1) == '\n') {
+			* (cmd + strlen (cmd) - 1) = 0;
+		}
+	time (& (errlog.time));		
+	errlog.string=cmd;
+	addmsg(errlog);
+}
+
+@

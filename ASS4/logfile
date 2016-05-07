@@ -1,0 +1,144 @@
+04:13:40 PM OSS Process number 0 with pid 28512 scheduled CPU.   Given Quantum: 10.00ms
+
+04:13:40 PM OSS Process number 0 with pid 28512 Generated.
+
+04:13:40 PM OSS Process number 0 with pid 28512 surrendered CPU. Used Quantum:  0.15ms
+
+04:13:40 PM OSS Process number 0 with pid 28512 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:40 PM OSS Process number 0 with pid 28512 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:40 PM OSS Process number 0 with pid 28512 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:40 PM OSS Process number 1 with pid 28513 Generated.
+
+04:13:40 PM OSS Process number 0 with pid 28512 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:40 PM OSS Process number 0 with pid 28512 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:40 PM OSS Process number 2 with pid 28514 Generated.
+
+04:13:40 PM OSS Process number 0 with pid 28512 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:40 PM OSS Process number 0 with pid 28512 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:40 PM OSS Process number 3 with pid 28515 Generated.
+
+04:13:40 PM OSS Process number 0 with pid 28512 surrendered CPU. Used Quantum:  1077.67ms
+
+04:13:40 PM OSS Process number 0 with pid 28512 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:40 PM OSS Process number 4 with pid 28516 Generated.
+
+04:13:40 PM OSS Process number 0 with pid 0 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:40 PM 
+============
+
+04:13:40 PM OSS Process number 0 with pid 0 exiting system.
+
+04:13:41 PM Time In System: 0.09ms
+Total Time On CPU: 8950.83ms
+
+04:13:41 PM ============
+
+
+04:13:41 PM OSS Process number 1 with pid 28513 scheduled CPU.   Given Quantum: 1970.56ms
+
+04:13:41 PM OSS Process number 0 with pid 28517 Generated.
+
+04:13:41 PM OSS Process number 1 with pid 28513 surrendered CPU. Used Quantum:  1310.15ms
+
+04:13:41 PM OSS Process number 1 with pid 28513 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:41 PM OSS Process number 5 with pid 28518 Generated.
+
+04:13:41 PM OSS Process number 1 with pid 28513 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:41 PM OSS Process number 1 with pid 28513 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:41 PM OSS Process number 6 with pid 28519 Generated.
+
+04:13:41 PM OSS Process number 1 with pid 28513 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:41 PM OSS Process number 1 with pid 28513 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:41 PM OSS Process number 7 with pid 28520 Generated.
+
+04:13:41 PM OSS Process number 1 with pid 0 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:41 PM 
+============
+
+04:13:41 PM OSS Process number 1 with pid 0 exiting system.
+
+04:13:41 PM Time In System: 0.01ms
+Total Time On CPU: 7214.90ms
+
+04:13:41 PM ============
+
+
+04:13:41 PM OSS Process number 2 with pid 28514 scheduled CPU.   Given Quantum: 1970.56ms
+
+04:13:41 PM OSS Process number 1 with pid 28521 Generated.
+
+04:13:41 PM OSS Process number 2 with pid 28514 surrendered CPU. Used Quantum:  1310.15ms
+
+04:13:41 PM OSS Process number 2 with pid 28514 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:41 PM OSS Process number 8 with pid 28522 Generated.
+
+04:13:41 PM OSS Process number 2 with pid 28514 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:41 PM OSS Process number 2 with pid 28514 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:41 PM OSS Process number 9 with pid 28523 Generated.
+
+04:13:41 PM OSS Process number 2 with pid 28514 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:42 PM OSS Process number 2 with pid 28514 scheduled CPU.   Given Quantum: 1968.25ms
+
+04:13:42 PM OSS Process number 10 with pid 28524 Generated.
+
+04:13:42 PM OSS Process number 2 with pid 0 surrendered CPU. Used Quantum:  1968.25ms
+
+04:13:42 PM 
+============
+
+04:13:42 PM OSS Process number 2 with pid 0 exiting system.
+
+04:13:42 PM OSS - Out of time. Cleaning up and terminating.
+
+04:13:42 PM User Process 28524 - Killed.
+
+04:13:42 PM User Process 28517 - Killed.
+
+04:13:42 PM User Process 28522 - Killed.
+
+04:13:42 PM User Process 28519 - Killed.
+
+04:13:42 PM User Process 28518 - Killed.
+
+04:13:42 PM User Process 28515 - Killed.
+
+04:13:42 PM User Process 28516 - Killed.
+
+04:13:42 PM User Process 28520 - Killed.
+
+04:13:42 PM User Process 28523 - Killed.
+
+04:13:42 PM User Process 28521 - Killed.
+
+04:13:42 PM Statistics
+
+04:13:42 PM Averages for Completed Processes
+
+04:13:42 PM Average Time in System: 0.03ms
+
+04:13:42 PM Average CPU Time: 5845.16ms
+
+04:13:42 PM Average Burst Length: 1476.19ms
+
+
+04:13:42 PM Total Run Time: 23s 633.73ms
+

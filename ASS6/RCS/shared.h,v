@@ -1,0 +1,134 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.04.28.22.22.30;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <getopt.h>
+#include <wait.h>
+#include <unistd.h>
+#include <string.h>
+#include <ctype.h>
+#include <errno.h>
+#include <time.h>
+#include <signal.h>
+#include <semaphore.h>
+#include <fcntl.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/sem.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+
+
+
+#define SEMWAIT -1
+#define SEMSIG 1
+#define NUM_FRAMES 16           // number of frames in system
+#define NUM_PAGES 20            // number of pages available to processes
+#define DEFAULT_CHILD_COUNT 12  // default number of child processes
+#define MAX_PROCESSES 18
+#define SEM_FLAGS (IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR)
+#define FILE_FLAGS (O_CREAT |O_RDWR |O_APPEND|O_SYNC)   // for write function
+#define GLOBAL_TIMEOUT 10
+
+/*• Dirty bit
+	– Also known as dirty bit
+	– Each frame has a dirty bit associated with it in hardware
+	– Dirty bit is set if the page has been modified or written into
+	– If the page is selected for replacement
+	∗ Check the dirty bit associated with the frame
+	∗ If the bit is set write it back into its place on disk
+	∗ Otherwise, the page in disk is same as the current one
+*/
+
+typedef struct _page_data_t {
+  int table_index;
+  int page_num;
+  int child_index;
+  int range[2];			// memory range of page entry
+  int dirty;
+  int reference;
+  int valid;
+  unsigned long reference_time;
+} page_data_t;
+
+typedef struct _page_table_t {
+  page_data_t entries[NUM_FRAMES];
+} page_table_t;
+
+
+/**
+    page tables - fixed sized arrays,  each process <   32K memory,  each page
+    being 1K.  page table  should declare its size your programs do not access
+    memory beyond the page table limit. The page table should have all the
+    required fields that may be implemented by bits or character data types.
+    Assume that your system has a total memory of 256K. Use a bit vector to
+    keep track of the unallocated frames.  After the resources have been set
+    up, fork a user process at random times (between 1 and 500 milliseconds
+    of your
+**/
+
+typedef struct _mem_reference_t{
+  int rw;
+  int address;
+  pid_t pid;
+  int child_index;
+} mem_reference_t;
+
+typedef struct _user_page_t {
+  int page_num;
+  int child_index;
+  int range[2];
+} user_page_t;
+
+typedef struct{
+	unsigned int sec;
+	unsigned int nsec;
+} logical_clock_t;
+
+
+
+pid_t pids[DEFAULT_CHILD_COUNT];
+
+// logging function
+void writelog(char *msg) {
+	time_t now;
+	time(&now);
+	char *timestr = (char *) malloc(12);
+	strftime(timestr, 12, "%r", localtime(&now));
+	char tmp[strlen(timestr) + strlen(msg) + 2];
+	sprintf(tmp, "%s %s\n", timestr, msg);
+	int fd = open("log", FILE_FLAGS, 0777);
+	if (fd < 0) {
+		perror("writelog: open failed");
+		exit(EXIT_FAILURE);
+	}
+	// in case of any buffer issues
+	write(fd, tmp, strlen(tmp));              // write to file
+	// write (STDOUT_FILENO, msg, strlen (msg)); // write to terminal
+	close(fd);
+}
+@

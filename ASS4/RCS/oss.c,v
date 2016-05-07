@@ -1,0 +1,409 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.03.17.19.55.09;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+#include "shared.h"
+
+unsigned int wait_time_total = 0;
+unsigned long cpu_total;
+float avg_tp, avg_tt, avg_wt;                // Statistics calculation variables
+float avg_cu;                                // Statistics calculation variables
+
+// GLOBAL
+key_t SHMKEY1;              // Shared memory key
+key_t SEMKEY1;              // Semaphore key 1
+key_t SEMKEY2;              // Semaphore key 2
+key_t SEMKEY3;              // Semaphore key 3
+int mypid;		// My process ID
+int mynum;		// My child ID
+int i, x;                                    // Iteration variables
+
+/////////////////////
+//  FUNCTIONS      //
+/////////////////////
+void sigproc (int sig);
+int sigcheck();
+void alarm_handler();
+
+int term_proc (int , int );
+void cleanup (int );
+void sem_wait (int );
+void sem_signal (int );
+int count_children() ;
+
+void init_shm ();
+int count_children() {
+	int i, count = 0;
+	for (i = 0; i < DEFAULT_NUM_CHILD; i++) {
+		// Check for child running status. If not, attempt to clear the process. If so, increment count.
+		if (pcb->child_running[i] == 0 && child_pid[i] > 0) {
+			sprintf (msgstr, "Child %02d has exited - attempting to clean it up", i);
+			writelog (msgstr);
+
+			if (term_proc (i, SIGTERM) != 0) {
+				sprintf (msgstr, "There was an issue terminating child %02d", i);
+				writelog (msgstr);
+				cleanup (SIGTERM);
+				exit (1);
+			}
+			child_pid[i] = 0;
+		}
+
+		// If this child is running, increment the total children count
+		if (pcb->child_running[i]) {
+			count++;
+		}
+	}
+
+	sprintf (msgstr, "Current child count is %d", count);
+	writelog (msgstr);
+	return count;
+}
+
+
+// BIT VECTOR: KEEP TRACK OF THE PROCESS CONTROL BLOCKS (OR PROCESS IDS) THAT ARE ALREADY TAKEN.
+
+void usage() {
+	printf ("USAGE: master [options] \n\n");
+	printf ("OPTIONS:\n");
+	printf ("\t-h  help \n");
+	printf ("\t-n  [# of children 1 to 18] default is 18 \n");
+	printf ("\t-p  [%% of cpu_time allocated to high priority] default is 80 \n");
+}
+
+// fork(): create new process with new address space
+void fork_child (int child) {
+	char child_arg[3] = ""; // String to hold child argument
+
+	if ( (child_pid[child] = fork()) < 0) {
+		sprintf (msgstr, "oss: fork() for child %02d", child);
+		perror (msgstr);
+		fprintf (stderr, "%s\n", msgstr);
+		cleanup (SIGTERM);
+		exit (1);
+	} else {
+		if (child_pid[child] == 0) {
+			// exec child
+			sprintf (child_arg, "%02d", child);
+			execl ("./slave", "slave", child_arg, (char *) NULL);
+			// Handle execl() error, if one occurs
+			sprintf (msgstr, "oss: exec child %02d after fork\n", child);
+			perror (msgstr);
+		} else { // This is the parent; write to oss log about fork()
+			sprintf (msgstr, "Forked process #%02d PID: %02d", child, child_pid[child]);
+			writelog (msgstr);
+			pcb->child_running[child] = 1;
+		}
+	}
+}
+
+
+void nsleep(unsigned int nanoseconds,int count) {
+   int i;
+   struct timespec slptm;
+   slptm.tv_sec = 0;
+   slptm.tv_nsec = nanoseconds;
+
+      for (i=0; i<count; i++){
+        nanosleep(&slptm, NULL);
+        printf("\007");
+        fflush(stdout);
+    }
+
+}
+
+
+
+int main (int argc, char **argv) {
+	int c;
+	int index = 0;
+	srand (time (NULL));               // Seed the random number generator
+	int quantum_val = -1;             // for user # of children
+	int cpu_alloc_high_priority = -1;  // for user sleep timeout
+	while ( (c = getopt (argc, argv, "hp:n:")) != -1) {
+		switch (c) {
+			case 'h':           // print help
+				usage();
+				exit (EXIT_FAILURE);
+
+			case 'p':           // user set priority
+				cpu_alloc_high_priority = atoi (optarg);
+
+				if ( (cpu_alloc_high_priority < 0) || (cpu_alloc_high_priority > 100)) {
+					fprintf (stderr, "oss: -p has invalid value.\n");
+					exit (EXIT_FAILURE);
+				}
+
+				break;
+
+			case 'n':
+				quantum_val = atoi (optarg);
+
+				if ( (quantum_val < 0) || (quantum_val > 100)) {
+					fprintf (stderr, "oss: -n has invalid value.\n");
+					exit (EXIT_FAILURE);
+				}
+
+				break;
+
+			case '?':
+				if (optopt == 'p') {
+					fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+					exit (EXIT_FAILURE);
+				} else if (isprint (optopt)) {
+					fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+					exit (EXIT_FAILURE);
+				} else {
+					fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
+					exit (EXIT_FAILURE);
+				}
+
+			default:
+				exit (EXIT_FAILURE);
+		}
+	}
+
+	// Make sure no more arguments. if so exit
+	for (index = optind; index < argc; index++) {
+		fprintf (stderr, "Non-option argument %s\n", argv[index]);
+		exit (EXIT_FAILURE);
+	}
+
+	if (cpu_alloc_high_priority == -1) {
+		cpu_alloc_high_priority = DEFAULT_CPU_ALLOC_HIGH_PRIORITY;
+	}
+
+	if (quantum_val == -1) {
+		quantum_val = DEFAULT_NUM_CHILD;
+	}
+
+
+
+	// Signal init_shmializations
+	if (signal (SIGINT, sigproc) == SIG_ERR) {
+		fprintf (stderr, "can't catch SIGINT\n");
+		exit (EXIT_FAILURE);
+	}
+
+	if (signal (SIGALRM, &alarm_handler) == SIG_ERR) {
+		sprintf (msgstr, "can't catch SIGALRM");
+		perror (msgstr);
+		writelog (msgstr);
+		exit (EXIT_FAILURE);
+	}
+
+    init_shm();
+
+
+	alarm (GLOBAL_TIMEOUT);
+	sem_wait (semid_clock);                      // wait on clock semaphore
+	pcb->clock_sec = 0;
+	pcb->clock_nano = 0;
+	sem_signal (semid_clock);                    // signal on clock semaphore
+	fprintf (stderr, "initialized clock\n");
+
+	// init the child run status array
+	for (i = 0; i < DEFAULT_NUM_CHILD; i++) {
+		pcb->child_running[i] = 0;
+	}
+
+	fprintf (stderr, "init child run status array\n");
+
+
+	while (1) {
+		if (sigcheck()) { // Check for signals
+			break;
+		}
+
+
+		//////////////////////////////////////////////////
+		//          ADVANCE CLOCK                       //
+		//////////////////////////////////////////////////
+		//    Advance the logical clock by 1.xx seconds in
+		//    each iteration of the loop where xx is the number of nanoseconds. xx
+		//    will be a random number in the interval [0,1000]
+		//    to simulate some overhead activity for each iteration.
+
+
+        //          FORK AND EXEC CHILDREN
+
+
+		// Only attempt a fork another child if we are below DEFAULT_NUM_CHILD processes
+		if (count_children() < DEFAULT_NUM_CHILD) {
+			// Determine which child to fork
+			for (i = 0; i <= DEFAULT_NUM_CHILD; i++) {
+				if (pcb->child_running[i] == 0) {
+					child_sel = i;
+					break;
+				}
+			}
+
+			sprintf (msgstr, "Selected child number %d to fork\n", child_sel);
+			writelog (msgstr);
+			fork_child (child_sel);
+		}
+
+        unsigned long nanoval=0;
+		sem_wait (semid_clock); // Wait for the clock to become available
+        pcb->clock_sec++;
+        nanoval = rand() % 1000;       //  Random 0 to 999
+        pcb->clock_nano=nanoval;
+        nanoval+=1000000;
+
+        sprintf(msgstr, "%lu",nanoval  );
+        fprintf(stderr, "%s\n",msgstr );
+//		sem_signal (semid_clock);// Signal that the clock is now available
+		fprintf (stderr, "Logical clock is now %d.%03d\n", pcb->clock_sec, pcb->clock_nano);
+
+		// Break if we have reached 100 elapsed seconds
+		if (pcb->clock_sec >= GLOBAL_TIMEOUT) {
+			sprintf (msgstr, "Reached maximum run time - exiting.\n");
+			writelog (msgstr);
+			fprintf (stderr, "%s", msgstr);
+
+		}
+
+		// STATS
+		for (i = 0; i < DEFAULT_NUM_CHILD; i++) {
+			wait_time_total += pcb->wait_time[i];        // total wait time
+			cpu_total += pcb->total_cpu_time[i];         // total CPU utilization
+		}
+
+		if (DEFAULT_NUM_CHILD > 0) {
+			avg_wt = (float) wait_time_total / DEFAULT_NUM_CHILD; // average wait time
+			avg_cu = ( (float) cpu_total / DEFAULT_NUM_CHILD) / 1000000; // average cpu_time time
+		}
+        //
+		// printf ("Statistics after %d.%03d", pcb->clock_sec, pcb->clock_sec);
+		// printf (".%03d of logical clock:\n", pcb->clock_nano);
+		// printf ("Average Throughput:\t\t%.2f  allocations per process\n", avg_tp);
+		// printf ("Average Turnaround Time:\t%.2f  milliseconds\n", avg_tt);
+		// printf ("Average Wait Time:\t\t%.2f  milliseconds\n", avg_wt);
+		// printf ("Average CPU Utilization:\t%.2f  milliseconds\n", avg_cu);
+		// // Write log entry and sleep
+        //
+
+		if (signum) {
+			cleanup (signum);     // Call cleanup with whatever the signal was. We should not
+		} else {
+			cleanup (SIGTERM);    //  ever get here without receiving a signal, but just in
+		}
+	}
+
+	return 0;
+}
+
+pid_t r_wait (int *stat_loc) {
+	int retval;
+
+	while ( ( (retval = wait (stat_loc)) == -1) && (errno == EINTR));
+
+	return retval;
+}
+
+void init_shm () {
+	// Generate a shared memory key
+	if ( (SHMKEY1 = ftok (current_dir(), 'A')) == -1) {
+		perror ("oss: ftok (SHMKEY)");
+		exit (1);
+	}
+
+	// Generate a semaphore key for clock
+	if ( (SEMKEY1 = ftok (current_dir(), 'B')) == -1) {
+		perror ("oss: ftok (SEMKEY1)");
+		exit (1);
+	}
+
+	// Generate a semaphore key for resources
+	if ( (SEMKEY2 = ftok (current_dir(), 'C')) == -1) {
+		perror ("oss: ftok (SEMKEY2)");
+		exit (1);
+	}
+
+	// Allocate memory for the shared IPC data
+	if ( (shmid_ptr = shmget (SHMKEY1, sizeof (pcb_t), IPC_CREAT | 0666)) == -1) {
+
+		perror ("oss: shmget");
+		exit (1);
+	}
+
+	// Get a pointer to the shared IPC data segment
+	if (! (pcb = (pcb_t *) (shmat (shmid_ptr, 0, 0)))) {
+		sprintf (msgstr, "oss: shmat");
+		perror (msgstr);
+		exit (1);
+	}
+
+	fprintf (stderr,
+			 "Allocated and attached to shared memory for scheduling data\n");
+
+
+
+	// Get a semaphore for the logical clock
+	if ( (semid_clock = semget (SEMKEY1, 1, 0600 | IPC_CREAT)) == -1) {
+		sprintf (msgstr, "oss: semget (clock)");
+		perror (msgstr);
+		exit (1);
+	}
+
+
+	union semun {
+		int val;
+		struct semid_ds *buf;
+		ushort *array;
+	} argument;
+	argument.val = 1;
+
+	if (semctl (semid_clock, 0, SETVAL, argument) == -1) {
+		sprintf (msgstr, "oss: semctl (clock)");
+		perror (msgstr);
+		exit (1);
+	}
+
+	fprintf (stderr,
+			 "Created and init_shmialized clock and resource semaphores to 1\n");
+
+	sprintf (msgstr, "Clock semaphore ID is %d", semid_clock);
+	writelog (msgstr);
+
+}
+// void init_sem() {
+// 	// initialize the clock and resource semaphores
+// 	union semun {
+// 		int val;
+// 		struct semid_ds *buf;
+// 		ushort *array;
+// 	} argument;
+// 	argument.val = 1;
+//
+// 	if (semctl (semid_clock, 0, SETVAL, argument) == -1) {
+// 		sprintf (msgstr, "oss: semctl (clock)");
+// 		perror (msgstr);
+// 		exit (1);
+// 	}
+//
+// 	fprintf (stderr,
+// 			 "Created and init_shmialized clock and resource semaphores to 1\n");
+// 	// init logical clock
+// }
+@

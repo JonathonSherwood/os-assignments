@@ -1,0 +1,156 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.03.17.19.55.22;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#include "shared.h"                            // IPC Data structure
+
+key_t SHMKEY1;              // Shared memory key
+key_t SEMKEY1;              // Semaphore key 1
+key_t SEMKEY2;              // Semaphore key 2
+key_t SEMKEY3;              // Semaphore key 3
+void init_shm () ;
+void init_sem() ;
+
+int main (int argc, char *argv[]) {
+	srand (time (NULL));   // Seed the random number generator
+
+    int signum;                 // Hold a signal number
+    int mypid;
+    int mynum;
+    int start_sec;
+    int finish_quantum = rand % 2;
+
+	if (argc != 2) {
+		fprintf (stderr, "Process number was not passed in call to slave\n");
+		exit (1);
+	} else {
+		mynum = atoi (argv[1]);
+	}
+
+
+
+
+	mypid = getpid();      // Get my PID
+	sprintf (msgstr, "Starting new run with PID %d", mypid);
+	writelog (msgstr);
+
+	// Get a semaphore for the logical clock
+	if ( (semid_slave = semget (SEMKEY1, 1, 0600)) == -1) {
+		sprintf (msgstr, "slave %02d: semget (clock)\n", mynum);
+		perror (msgstr);
+		exit (1);
+	}
+
+	// Get a semaphore for resources
+	if ( (semid_res = semget (SEMKEY2, 1, 0600)) == -1) {
+		sprintf (msgstr, "slave %02d: semget (resource)\n", mynum);
+		perror (msgstr);
+		exit (1);
+	}
+    //
+	// pcb->quantum[DEFAULT_NUM_CHILD] = 0;
+	// pcb->wait_time[mynum] = 0;
+	// pcb->total_cpu_time[mynum] = 0;
+	// // Start the termination timer
+	// start_sec = pcb->clock_sec;
+
+
+
+	// Go into loop
+	while (1) {
+		// Check for signals
+		if (sigcheck()) {
+			sprintf (msgstr, "Received signal %d - exiting...", signum);
+			writelog (msgstr);
+			break;
+		}
+
+
+		sem_wait (semid_slave);                   // wait on clock semaphore
+		sprintf (msgstr, "Logical clock is now %d.%03d\n", pcb->clock_sec,				 pcb->clock_nano);
+		sprintf (msgstr, "%s.%03d", msgstr, pcb->clock_nano);
+		writelog (msgstr);
+		// Update the wait and cpu_time statistics
+//		pcb->wait_time[mynum] += wait_milli;
+		// Write log entry and sleep
+
+		sprintf (msgstr, "Sleep %d\n", sleep_secs);
+		writelog (msgstr);
+		sleep (sleep_secs);
+	}
+
+	return 0;
+}
+
+void init_shm () {
+	// Generate a shared memory key
+	if ( (SHMKEY1 = ftok (current_dir(), 'A')) == -1) {
+		perror ("slave: ftok (SHMKEY1)");
+		exit (1);
+	}
+
+	// Generate a semaphore key for clock
+	if ( (SEMKEY1 = ftok (current_dir(), 'B')) == -1) {
+		perror ("slave: ftok (SEMKEY1)");
+		exit (1);
+	}
+
+	// Generate a semaphore key for resources
+	if ( (SEMKEY2 = ftok (current_dir(), 'C')) == -1) {
+		perror ("slave: ftok (SEMKEY2)");
+		exit (1);
+	}
+
+	// Allocate memory for the shared IPC data
+	shmid_slave = shmget (SHMKEY1, sizeof(pcb_t), 0600 | IPC_CREAT);
+
+	if (shmid_slave == -1) {
+		perror ("slave: shmget");
+		exit (1);
+	}
+
+	// Get a pointer to the shared IPC data segment
+	if (! (pcb = (pcb_t *) (shmat (shmid_ptr, 0, 0)))) {
+		sprintf (msgstr, "slave: shmat\n");
+		perror (msgstr);
+		exit (1);
+	}
+
+	fprintf (stderr,
+			 "Allocated and attached to shared memory for scheduling data\n");
+
+	// Get a semaphore for the logical clock
+	if ( (semid_slave = semget (SEMKEY1, 1, 0600 | IPC_CREAT)) == -1) {
+		sprintf (msgstr, "slave: semget (clock)");
+		perror (msgstr);
+		exit (1);
+	}
+
+	sprintf (msgstr, "Clock semaphore ID is %d", semid_slave);
+	writelog (msgstr);
+
+
+
+
+
+}
+@

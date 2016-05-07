@@ -1,0 +1,1191 @@
+04:41:51 AM process count is 0
+
+04:41:51 AM forking process number 0 
+
+04:41:51 AM forked process ID 4592 for process 00
+
+04:41:51 AM Starting mew process PID 4592
+
+04:41:51 AM process ID 4592 running 
+
+04:41:51 AM process 00: last run time set to:     0.00
+
+04:41:51 AM Logical clock: 1.137 seconds 
+
+04:41:52 AM process count is 1
+
+04:41:52 AM process 0 using 60 of quantum
+
+04:41:52 AM forking process number 1 
+
+04:41:52 AM forked process ID 4593 for process 01
+
+04:41:52 AM Starting mew process PID 4593
+
+04:41:52 AM process ID 4593 running 
+
+04:41:52 AM process 01: last run time set to:     1.14
+
+04:41:52 AM Logical clock: 2.861 seconds 
+
+04:41:52 AM process count is 2
+
+04:41:52 AM forking process number 2 
+
+04:41:52 AM forked process ID 4594 for process 02
+
+04:41:52 AM Starting mew process PID 4594
+
+04:41:52 AM process ID 4594 running 
+
+04:41:52 AM Logical clock: 3.7 seconds 
+
+04:41:52 AM process 02: last run time set to:     3.01
+
+04:41:52 AM process count is 3
+
+04:41:52 AM forking process number 3 
+
+04:41:52 AM forked process ID 4595 for process 03
+
+04:41:52 AM Starting mew process PID 4595
+
+04:41:52 AM process ID 4595 running 
+
+04:41:52 AM Logical clock: 4.86 seconds 
+
+04:41:52 AM process 03: last run time set to:     4.09
+
+04:41:52 AM process count is 4
+
+04:41:52 AM forking process number 4 
+
+04:41:52 AM forked process ID 4596 for process 04
+
+04:41:52 AM Starting mew process PID 4596
+
+04:41:52 AM process ID 4596 running 
+
+04:41:53 AM Logical clock: 5.912 seconds 
+
+04:41:53 AM process 04: last run time set to:     5.91
+
+04:41:53 AM process count is 5
+
+04:41:53 AM forking process number 5 
+
+04:41:53 AM forked process ID 4597 for process 05
+
+04:41:53 AM Starting mew process PID 4597
+
+04:41:53 AM process ID 4597 running 
+
+04:41:53 AM Logical clock: 6.566 seconds 
+
+04:41:53 AM process 05: last run time set to:     5.91
+
+04:41:53 AM process count is 6
+
+04:41:53 AM process 5 using 44 of quantum
+
+04:41:53 AM forking process number 6 
+
+04:41:53 AM forked process ID 4598 for process 06
+
+04:41:53 AM Starting mew process PID 4598
+
+04:41:53 AM process ID 4598 running 
+
+04:41:53 AM Logical clock: 7.676 seconds 
+
+04:41:53 AM process 06: last run time set to:     7.68
+
+04:41:53 AM process count is 7
+
+04:41:53 AM process 6 using 44 of quantum
+
+04:41:53 AM forking process number 7 
+
+04:41:53 AM forked process ID 4599 for process 07
+
+04:41:53 AM Starting mew process PID 4599
+
+04:41:53 AM process ID 4599 running 
+
+04:41:54 AM Logical clock: 8.979 seconds 
+
+04:41:54 AM process 07: last run time set to:     8.98
+
+04:41:54 AM process count is 8
+
+04:41:54 AM process 7 using 47 of quantum
+
+04:41:54 AM forking process number 8 
+
+04:41:54 AM forked process ID 4600 for process 08
+
+04:41:54 AM Starting mew process PID 4600
+
+04:41:54 AM process ID 4600 running 
+
+04:41:54 AM Logical clock: 9.722 seconds 
+
+04:41:54 AM process 08: last run time set to:     9.72
+
+04:41:54 AM process 8 using 47 of quantum
+
+04:41:54 AM process count is 9
+
+04:41:54 AM forking process number 9 
+
+04:41:54 AM forked process ID 4601 for process 09
+
+04:41:54 AM Starting mew process PID 4601
+
+04:41:54 AM process ID 4601 running 
+
+04:41:54 AM Logical clock: 10.731 seconds 
+
+04:41:54 AM process 09: last run time set to:    10.73
+
+04:41:54 AM process count is 10
+
+04:41:54 AM process 9 using 47 of quantum
+
+04:41:54 AM forking process number 10 
+
+04:41:54 AM forked process ID 4602 for process 10
+
+04:41:54 AM Starting mew process PID 4602
+
+04:41:55 AM process ID 4602 running 
+
+04:41:55 AM Logical clock: 11.643 seconds 
+
+04:41:55 AM process 10: last run time set to:    11.64
+
+04:41:55 AM process count is 11
+
+04:41:55 AM process 10 using 86 of quantum
+
+04:41:55 AM forking process number 11 
+
+04:41:55 AM forked process ID 4603 for process 11
+
+04:41:55 AM Starting mew process PID 4603
+
+04:41:55 AM process ID 4603 running 
+
+04:41:55 AM Logical clock: 12.787 seconds 
+
+04:41:55 AM process 11: last run time set to:    12.79
+
+04:41:55 AM process count is 12
+
+04:41:55 AM process 11 using 86 of quantum
+
+04:41:55 AM forking process number 12 
+
+04:41:55 AM forked process ID 4604 for process 12
+
+04:41:55 AM Starting mew process PID 4604
+
+04:41:55 AM process ID 4604 running 
+
+04:41:55 AM Logical clock: 13.622 seconds 
+
+04:41:55 AM process 12: last run time set to:    13.62
+
+04:41:56 AM process count is 13
+
+04:41:56 AM process 12 using 86 of quantum
+
+04:41:56 AM forking process number 13 
+
+04:41:56 AM forked process ID 4605 for process 13
+
+04:41:56 AM Starting mew process PID 4605
+
+04:41:56 AM process ID 4605 running 
+
+04:41:56 AM Logical clock: 14.51 seconds 
+
+04:41:56 AM process 13: last run time set to:    14.05
+
+04:41:56 AM process count is 14
+
+04:41:56 AM process 13 using 90 of quantum
+
+04:41:56 AM forking process number 14 
+
+04:41:56 AM forked process ID 4606 for process 14
+
+04:41:56 AM Starting mew process PID 4606
+
+04:41:56 AM process ID 4606 running 
+
+04:41:56 AM Logical clock: 15.36 seconds 
+
+04:41:56 AM process 14: last run time set to:    15.04
+
+04:41:56 AM process count is 15
+
+04:41:56 AM process 14 using 90 of quantum
+
+04:41:56 AM forking process number 15 
+
+04:41:57 AM forked process ID 4607 for process 15
+
+04:41:57 AM Starting mew process PID 4607
+
+04:41:57 AM process ID 4607 running 
+
+04:41:57 AM Logical clock: 16.796 seconds 
+
+04:41:57 AM process 15: last run time set to:    16.80
+
+04:41:57 AM process count is 16
+
+04:41:57 AM forking process number 16 
+
+04:41:57 AM forked process ID 4608 for process 16
+
+04:41:57 AM Starting mew process PID 4608
+
+04:41:57 AM process ID 4608 running 
+
+04:41:57 AM Logical clock: 17.654 seconds 
+
+04:41:57 AM process 16: last run time set to:    17.65
+
+04:41:57 AM process count is 17
+
+04:41:57 AM forking process number 17 
+
+04:41:57 AM forked process ID 4609 for process 17
+
+04:41:57 AM Starting mew process PID 4609
+
+04:41:57 AM process ID 4609 running 
+
+04:41:57 AM Logical clock: 18.969 seconds 
+
+04:41:57 AM process 17: last run time set to:    18.97
+
+04:41:58 AM process count is 18
+
+04:41:58 AM process ID 4592 running 
+
+04:41:58 AM Logical clock: 19.420 seconds 
+
+04:41:58 AM process 00: last run time set to:    19.42
+
+04:41:58 AM process count is 18
+
+04:41:58 AM process 0 using 85 of quantum
+
+04:41:58 AM process ID 4597 running 
+
+04:41:58 AM Logical clock: 20.897 seconds 
+
+04:41:58 AM process 05: last run time set to:    20.90
+
+04:41:58 AM process count is 18
+
+04:41:58 AM process 5 using 113 of quantum
+
+04:41:58 AM process ID 4598 running 
+
+04:41:58 AM Logical clock: 21.331 seconds 
+
+04:41:58 AM process 06: last run time set to:    21.33
+
+04:41:58 AM process count is 18
+
+04:41:58 AM process 6 using 113 of quantum
+
+04:41:58 AM process ID 4593 running 
+
+04:41:58 AM Logical clock: 22.181 seconds 
+
+04:41:58 AM process 01: last run time set to:    22.18
+
+04:41:58 AM process count is 18
+
+04:41:58 AM process 1 using 116 of quantum
+
+04:41:59 AM process ID 4594 running 
+
+04:41:59 AM Logical clock: 23.609 seconds 
+
+04:41:59 AM process 02: last run time set to:    23.61
+
+04:41:59 AM process count is 18
+
+04:41:59 AM process 2 using 116 of quantum
+
+04:41:59 AM process ID 4599 running 
+
+04:41:59 AM Logical clock: 24.636 seconds 
+
+04:41:59 AM process 07: last run time set to:    24.64
+
+04:41:59 AM process count is 18
+
+04:41:59 AM process 7 using 100 of quantum
+
+04:41:59 AM process ID 4600 running 
+
+04:41:59 AM Logical clock: 25.919 seconds 
+
+04:41:59 AM process 08: last run time set to:    25.92
+
+04:41:59 AM process count is 18
+
+04:41:59 AM process 8 using 100 of quantum
+
+04:41:59 AM process ID 4601 running 
+
+04:41:59 AM Logical clock: 26.283 seconds 
+
+04:41:59 AM process 09: last run time set to:    26.28
+
+04:41:59 AM process count is 18
+
+04:41:59 AM process 9 using 100 of quantum
+
+04:41:59 AM process ID 4595 running 
+
+04:42:00 AM Logical clock: 27.498 seconds 
+
+04:42:00 AM process 03: last run time set to:    27.50
+
+04:42:00 AM process count is 18
+
+04:42:00 AM process 3 using 116 of quantum
+
+04:42:00 AM process ID 4596 running 
+
+04:42:00 AM Logical clock: 28.144 seconds 
+
+04:42:00 AM process 04: last run time set to:    28.14
+
+04:42:00 AM process count is 18
+
+04:42:00 AM process 4 using 116 of quantum
+
+04:42:00 AM process ID 4596 running 
+
+04:42:00 AM Logical clock: 29.259 seconds 
+
+04:42:00 AM process 04: last run time set to:    29.26
+
+04:42:00 AM process count is 18
+
+04:42:00 AM process 04 ran 500 or more milliseconds...exiting
+
+04:42:00 AM process ID 4596 running 
+
+04:42:00 AM Logical clock: 30.914 seconds 
+
+04:42:00 AM process 04: last run time set to:    30.91
+
+04:42:11 AM 
+Timer Elapsed-C
+
+04:42:11 AM cleaning up
+
+04:42:11 AM removed semaphore
+
+04:44:36 AM process count is 0
+04:44:36 AM forking process number 0 
+04:44:36 AM forked process ID 4749 for process 00
+04:44:36 AM Starting mew process PID 4749
+04:44:36 AM process ID 4749 running 
+04:44:37 AM Logical clock: 1.181 seconds 
+04:44:37 AM process 00: last run time set to:     0.00
+04:44:37 AM process count is 1
+04:44:37 AM forking process number 1 
+04:44:37 AM forked process ID 4751 for process 01
+04:44:37 AM Starting mew process PID 4751
+04:44:37 AM process ID 4751 running 
+04:44:37 AM Logical clock: 2.141 seconds 
+04:44:37 AM process 01: last run time set to:     2.14
+04:44:37 AM process count is 2
+04:44:37 AM process 1 using 76 of quantum
+04:44:37 AM forking process number 2 
+04:44:37 AM forked process ID 4752 for process 02
+04:44:37 AM Starting mew process PID 4752
+04:44:37 AM process ID 4752 running 
+04:44:37 AM Logical clock: 3.189 seconds 
+04:44:37 AM process 02: last run time set to:     3.19
+04:44:37 AM process count is 3
+04:44:37 AM process 2 using 76 of quantum
+04:44:37 AM forking process number 3 
+04:44:37 AM forked process ID 4753 for process 03
+04:44:37 AM Starting mew process PID 4753
+04:44:37 AM process ID 4753 running 
+04:44:37 AM Logical clock: 4.957 seconds 
+04:44:37 AM process 03: last run time set to:     4.96
+04:44:37 AM process count is 4
+04:44:37 AM process 3 using 76 of quantum
+04:44:37 AM forking process number 4 
+04:44:38 AM forked process ID 4754 for process 04
+04:44:38 AM Starting mew process PID 4754
+04:44:38 AM process ID 4754 running 
+04:44:38 AM Logical clock: 5.352 seconds 
+04:44:38 AM process 04: last run time set to:     5.35
+04:44:38 AM process count is 5
+04:44:38 AM 
+Caught CONTROL-C
+04:44:38 AM cleaning up
+04:44:38 AM removed semaphore
+04:44:44 AM process count is 0
+04:44:44 AM forking process number 0 
+04:44:44 AM forked process ID 4783 for process 00
+04:44:44 AM Starting mew process PID 4783
+04:44:44 AM process ID 4783 running 
+04:44:44 AM Logical clock: 1.395 seconds 
+04:44:44 AM process 00: last run time set to:     0.00
+04:44:45 AM process 0 using 160 of quantum
+04:44:45 AM process count is 1
+04:44:45 AM forking process number 1 
+04:44:45 AM forked process ID 4784 for process 01
+04:44:45 AM Starting mew process PID 4784
+04:44:45 AM process ID 4784 running 
+04:44:45 AM Logical clock: 2.361 seconds 
+04:44:45 AM process 01: last run time set to:     1.39
+04:44:45 AM process count is 2
+04:44:45 AM process 1 using 178 of quantum
+04:44:45 AM forking process number 2 
+04:44:45 AM forked process ID 4785 for process 02
+04:44:45 AM Starting mew process PID 4785
+04:44:45 AM process ID 4785 running 
+04:44:45 AM process 02: last run time set to:     2.36
+04:44:45 AM Logical clock: 3.748 seconds 
+04:44:45 AM process count is 3
+04:44:45 AM process 2 using 178 of quantum
+04:44:45 AM forking process number 3 
+04:44:45 AM forked process ID 4786 for process 03
+04:44:45 AM Starting mew process PID 4786
+04:44:45 AM process ID 4786 running 
+04:44:45 AM Logical clock: 4.561 seconds 
+04:44:45 AM process 03: last run time set to:     4.56
+04:44:45 AM process 3 using 178 of quantum
+04:44:45 AM process count is 4
+04:44:45 AM forking process number 4 
+04:44:45 AM forked process ID 4787 for process 04
+04:44:45 AM Starting mew process PID 4787
+04:44:46 AM process ID 4787 running 
+04:44:46 AM Logical clock: 5.923 seconds 
+04:44:46 AM process 04: last run time set to:     5.92
+04:44:46 AM process 4 using 194 of quantum
+04:44:46 AM process count is 5
+04:44:46 AM forking process number 5 
+04:44:46 AM forked process ID 4788 for process 05
+04:44:46 AM Starting mew process PID 4788
+04:44:46 AM process ID 4788 running 
+04:44:46 AM Logical clock: 6.240 seconds 
+04:44:46 AM process 05: last run time set to:     6.24
+04:44:46 AM process count is 6
+04:44:46 AM process 5 using 194 of quantum
+04:44:46 AM forking process number 6 
+04:44:46 AM forked process ID 4789 for process 06
+04:44:46 AM Starting mew process PID 4789
+04:44:46 AM process ID 4789 running 
+04:44:46 AM Logical clock: 7.728 seconds 
+04:44:46 AM process 06: last run time set to:     7.73
+04:44:46 AM process count is 7
+04:44:46 AM process 6 using 194 of quantum
+04:44:46 AM forking process number 7 
+04:44:47 AM forked process ID 4790 for process 07
+04:44:47 AM Starting mew process PID 4790
+04:44:47 AM process ID 4790 running 
+04:44:47 AM Logical clock: 8.145 seconds 
+04:44:47 AM process 07: last run time set to:     8.15
+04:44:47 AM process count is 8
+04:44:47 AM forking process number 8 
+04:44:47 AM forked process ID 4791 for process 08
+04:44:47 AM Starting mew process PID 4791
+04:44:47 AM process ID 4791 running 
+04:44:47 AM Logical clock: 9.729 seconds 
+04:44:47 AM process 08: last run time set to:     9.73
+04:44:47 AM process count is 9
+04:44:47 AM forking process number 9 
+04:44:47 AM forked process ID 4792 for process 09
+04:44:47 AM Starting mew process PID 4792
+04:44:47 AM process ID 4792 running 
+04:44:47 AM Logical clock: 10.397 seconds 
+04:44:47 AM process 09: last run time set to:    10.40
+04:44:47 AM process count is 10
+04:44:47 AM forking process number 10 
+04:44:48 AM forked process ID 4793 for process 10
+04:44:48 AM Starting mew process PID 4793
+04:44:48 AM process ID 4793 running 
+04:44:48 AM Logical clock: 11.484 seconds 
+04:44:48 AM process 10: last run time set to:    11.48
+04:44:48 AM process count is 11
+04:44:48 AM process 10 using 144 of quantum
+04:44:48 AM forking process number 11 
+04:44:48 AM forked process ID 4794 for process 11
+04:44:48 AM Starting mew process PID 4794
+04:44:48 AM process ID 4794 running 
+04:44:48 AM Logical clock: 12.320 seconds 
+04:44:48 AM process 11: last run time set to:    12.32
+04:44:48 AM process 11 using 144 of quantum
+04:44:48 AM process count is 12
+04:44:48 AM forking process number 12 
+04:44:48 AM forked process ID 4795 for process 12
+04:44:48 AM Starting mew process PID 4795
+04:44:48 AM process ID 4795 running 
+04:44:48 AM Logical clock: 13.339 seconds 
+04:44:48 AM process 12: last run time set to:    13.34
+04:44:48 AM process count is 13
+04:44:49 AM process 12 using 144 of quantum
+04:44:49 AM forking process number 13 
+04:44:49 AM forked process ID 4796 for process 13
+04:44:49 AM Starting mew process PID 4796
+04:44:49 AM process ID 4796 running 
+04:44:49 AM Logical clock: 14.714 seconds 
+04:44:49 AM process 13: last run time set to:    14.71
+04:44:49 AM process count is 14
+04:44:49 AM process 13 using 149 of quantum
+04:44:49 AM forking process number 14 
+04:44:49 AM forked process ID 4797 for process 14
+04:44:49 AM Starting mew process PID 4797
+04:44:49 AM process ID 4797 running 
+04:44:49 AM Logical clock: 15.150 seconds 
+04:44:49 AM process 14: last run time set to:    15.15
+04:44:49 AM process count is 15
+04:44:49 AM process 14 using 149 of quantum
+04:44:49 AM forking process number 15 
+04:44:49 AM forked process ID 4798 for process 15
+04:44:49 AM Starting mew process PID 4798
+04:44:50 AM process ID 4798 running 
+04:44:50 AM Logical clock: 16.1 seconds 
+04:44:50 AM process 15: last run time set to:    16.00
+04:44:50 AM process 15 using 46 of quantum
+04:44:50 AM process count is 16
+04:44:50 AM forking process number 16 
+04:44:50 AM forked process ID 4799 for process 16
+04:44:50 AM Starting mew process PID 4799
+04:44:50 AM process ID 4799 running 
+04:44:50 AM Logical clock: 17.666 seconds 
+04:44:50 AM process 16: last run time set to:    17.67
+04:44:50 AM process count is 17
+04:44:50 AM process 16 using 46 of quantum
+04:44:50 AM forking process number 17 
+04:44:50 AM forked process ID 4800 for process 17
+04:44:50 AM Starting mew process PID 4800
+04:44:50 AM process ID 4800 running 
+04:44:50 AM Logical clock: 18.998 seconds 
+04:44:50 AM process 17: last run time set to:    19.00
+04:44:50 AM process count is 18
+04:44:50 AM process 17 using 46 of quantum
+04:44:51 AM process ID 4783 running 
+04:44:51 AM Logical clock: 19.28 seconds 
+04:44:51 AM process 00: last run time set to:    19.03
+04:44:51 AM process count is 18
+04:44:51 AM process 0 using 160 of quantum
+04:44:51 AM process ID 4783 running 
+04:44:51 AM Logical clock: 20.939 seconds 
+04:44:51 AM process 00: last run time set to:    20.94
+04:44:51 AM process count is 18
+04:44:51 AM process 0 using 39 of quantum
+04:44:51 AM process ID 4784 running 
+04:44:51 AM Logical clock: 21.184 seconds 
+04:44:51 AM process 01: last run time set to:    21.18
+04:44:51 AM process count is 18
+04:44:51 AM process ID 4785 running 
+04:44:51 AM Logical clock: 22.498 seconds 
+04:44:51 AM process 02: last run time set to:    22.50
+04:44:51 AM process count is 18
+04:44:51 AM process ID 4786 running 
+04:44:52 AM Logical clock: 23.349 seconds 
+04:44:52 AM process 03: last run time set to:    23.35
+04:44:52 AM process count is 18
+04:44:52 AM process ID 4787 running 
+04:44:52 AM Logical clock: 24.705 seconds 
+04:44:52 AM process 04: last run time set to:    24.70
+04:44:52 AM process count is 18
+04:44:52 AM process 4 using 20 of quantum
+04:44:52 AM process ID 4788 running 
+04:44:52 AM Logical clock: 25.105 seconds 
+04:44:52 AM process 05: last run time set to:    25.10
+04:44:52 AM process 5 using 20 of quantum
+04:44:52 AM process count is 18
+04:44:52 AM process ID 4788 running 
+04:44:52 AM Logical clock: 26.963 seconds 
+04:44:52 AM process 05: last run time set to:    26.96
+04:44:52 AM process count is 18
+04:44:52 AM process ID 4798 running 
+04:44:52 AM Logical clock: 27.616 seconds 
+04:44:52 AM process 15: last run time set to:    27.62
+04:44:52 AM process count is 18
+04:44:53 AM process 15 using 180 of quantum
+04:44:53 AM process ID 4789 running 
+04:44:53 AM Logical clock: 28.721 seconds 
+04:44:53 AM process 06: last run time set to:    28.72
+04:44:53 AM process count is 18
+04:44:53 AM process 6 using 20 of quantum
+04:44:53 AM process ID 4793 running 
+04:44:53 AM process 10: last run time set to:    29.78
+04:44:53 AM Logical clock: 29.777 seconds 
+04:44:53 AM process count is 18
+04:44:53 AM process ID 4799 running 
+04:44:53 AM Logical clock: 30.761 seconds 
+04:44:53 AM process 16: last run time set to:    30.76
+04:44:53 AM process count is 18
+04:44:53 AM process 16 using 180 of quantum
+04:44:53 AM process ID 4800 running 
+04:44:53 AM Logical clock: 31.597 seconds 
+04:44:53 AM process 17: last run time set to:    31.60
+04:44:53 AM process count is 18
+04:44:53 AM process 17 using 180 of quantum
+04:44:53 AM process ID 4790 running 
+04:44:53 AM Logical clock: 32.171 seconds 
+04:44:53 AM process 07: last run time set to:    31.60
+04:44:53 AM process 7 using 103 of quantum
+04:44:54 AM process count is 18
+04:44:54 AM process ID 4790 running 
+04:44:54 AM Logical clock: 33.474 seconds 
+04:44:54 AM process 07: last run time set to:    33.47
+04:44:54 AM process count is 18
+04:44:54 AM process 7 using 16 of quantum
+04:44:54 AM process ID 4791 running 
+04:44:54 AM Logical clock: 34.696 seconds 
+04:44:54 AM process 08: last run time set to:    34.70
+04:44:54 AM process count is 18
+04:44:54 AM process 8 using 103 of quantum
+04:44:54 AM process ID 4794 running 
+04:44:54 AM Logical clock: 35.83 seconds 
+04:44:54 AM process 11: last run time set to:    35.08
+04:44:54 AM process count is 18
+04:44:54 AM process ID 4794 running 
+04:44:54 AM Logical clock: 36.748 seconds 
+04:44:54 AM process 11: last run time set to:    36.75
+04:44:54 AM process count is 18
+04:44:54 AM process 11 using 54 of quantum
+04:44:54 AM process ID 4795 running 
+04:44:55 AM Logical clock: 37.288 seconds 
+04:44:55 AM process 12: last run time set to:    37.29
+04:44:55 AM process count is 18
+04:44:55 AM process ID 4792 running 
+04:44:55 AM Logical clock: 38.810 seconds 
+04:44:55 AM process 09: last run time set to:    38.81
+04:44:55 AM process count is 18
+04:44:55 AM process 9 using 103 of quantum
+04:44:55 AM process ID 4796 running 
+04:44:55 AM Logical clock: 39.892 seconds 
+04:44:55 AM process 13: last run time set to:    39.89
+04:44:55 AM process count is 18
+04:44:55 AM process 13 using 107 of quantum
+04:44:55 AM process ID 4797 running 
+04:44:55 AM Logical clock: 40.16 seconds 
+04:44:55 AM process 14: last run time set to:    40.02
+04:44:55 AM process count is 18
+04:44:55 AM process 14 using 107 of quantum
+04:44:55 AM process ID 4797 running 
+04:44:55 AM Logical clock: 41.558 seconds 
+04:44:56 AM process 14: last run time set to:    41.56
+04:44:56 AM process count is 18
+04:44:56 AM process 14 using 134 of quantum
+04:44:56 AM process ID 4783 running 
+04:44:56 AM Logical clock: 42.727 seconds 
+04:44:56 AM process 00: last run time set to:    42.73
+04:44:56 AM process count is 18
+04:44:56 AM process 0 using 144 of quantum
+04:44:56 AM process 00 ran 500 or more milliseconds...exiting
+04:44:56 AM process ID 4787 running 
+04:44:56 AM Logical clock: 43.335 seconds 
+04:44:56 AM process 04: last run time set to:    43.33
+04:45:04 AM 
+Timer Elapsed-C
+04:45:04 AM cleaning up
+04:45:05 AM removed semaphore
+04:46:53 AM process count is 0
+04:46:53 AM forking process number 0 
+04:46:53 AM forked process ID 4874 for process 00
+04:46:53 AM Starting mew process PID 4874
+04:46:53 AM process ID 4874 running 
+04:46:53 AM process 00: last run time set to:     0.00
+04:46:53 AM Logical clock: 1.457 seconds 
+04:46:53 AM process count is 1
+04:46:53 AM process 0 using 102 of quantum
+04:46:53 AM forking process number 1 
+04:46:53 AM forked process ID 4875 for process 01
+04:46:53 AM Starting mew process PID 4875
+04:46:53 AM process ID 4875 running 
+04:46:53 AM process 01: last run time set to:     1.46
+04:46:53 AM Logical clock: 2.503 seconds 
+04:46:53 AM process 1 using 102 of quantum
+04:46:53 AM process count is 2
+04:46:54 AM forking process number 2 
+04:46:54 AM forked process ID 4876 for process 02
+04:46:54 AM Starting mew process PID 4876
+04:46:54 AM process ID 4876 running 
+04:46:54 AM Logical clock: 3.585 seconds 
+04:46:54 AM process 02: last run time set to:     3.59
+04:46:54 AM process count is 3
+04:46:54 AM process 2 using 58 of quantum
+04:46:54 AM forking process number 3 
+04:46:54 AM forked process ID 4877 for process 03
+04:46:54 AM Starting mew process PID 4877
+04:46:54 AM process ID 4877 running 
+04:46:54 AM Logical clock: 4.169 seconds 
+04:46:54 AM process 03: last run time set to:     4.17
+04:46:54 AM process 3 using 58 of quantum
+04:46:54 AM process count is 4
+04:46:54 AM forking process number 4 
+04:46:54 AM forked process ID 4878 for process 04
+04:46:54 AM Starting mew process PID 4878
+04:46:54 AM process ID 4878 running 
+04:46:54 AM Logical clock: 5.822 seconds 
+04:46:54 AM process 04: last run time set to:     5.82
+04:46:54 AM process count is 5
+04:46:54 AM process 4 using 58 of quantum
+04:46:54 AM forking process number 5 
+04:46:54 AM forked process ID 4879 for process 05
+04:46:54 AM Starting mew process PID 4879
+04:46:55 AM process ID 4879 running 
+04:46:55 AM Logical clock: 6.339 seconds 
+04:46:55 AM process 05: last run time set to:     6.34
+04:46:55 AM process count is 6
+04:46:55 AM process 5 using 126 of quantum
+04:46:55 AM forking process number 6 
+04:46:55 AM forked process ID 4881 for process 06
+04:46:55 AM Starting mew process PID 4881
+04:46:55 AM process ID 4881 running 
+04:46:55 AM Logical clock: 7.269 seconds 
+04:46:55 AM process 06: last run time set to:     7.27
+04:46:55 AM process count is 7
+04:46:55 AM process 6 using 126 of quantum
+04:46:55 AM forking process number 7 
+04:46:55 AM forked process ID 4882 for process 07
+04:46:55 AM Starting mew process PID 4882
+04:46:55 AM process ID 4882 running 
+04:46:55 AM Logical clock: 8.595 seconds 
+04:46:55 AM process 07: last run time set to:     8.60
+04:46:55 AM process 7 using 126 of quantum
+04:46:55 AM process count is 8
+04:46:56 AM forking process number 8 
+04:46:56 AM forked process ID 4883 for process 08
+04:46:56 AM Starting mew process PID 4883
+04:46:56 AM process ID 4883 running 
+04:46:56 AM Logical clock: 9.641 seconds 
+04:46:56 AM process 08: last run time set to:     9.64
+04:46:56 AM process 8 using 31 of quantum
+04:46:56 AM process count is 9
+04:46:56 AM forking process number 9 
+04:46:56 AM forked process ID 4884 for process 09
+04:46:56 AM Starting mew process PID 4884
+04:46:56 AM process ID 4884 running 
+04:46:56 AM Logical clock: 10.58 seconds 
+04:46:56 AM process 09: last run time set to:    10.06
+04:46:56 AM process 9 using 31 of quantum
+04:46:56 AM process count is 10
+04:46:56 AM forking process number 10 
+04:46:56 AM forked process ID 4885 for process 10
+04:46:56 AM Starting mew process PID 4885
+04:46:56 AM process ID 4885 running 
+04:46:57 AM Logical clock: 11.168 seconds 
+04:46:57 AM process 10: last run time set to:    11.17
+04:46:57 AM process count is 11
+04:46:57 AM process 10 using 31 of quantum
+04:46:57 AM forking process number 11 
+04:46:57 AM forked process ID 4886 for process 11
+04:46:57 AM Starting mew process PID 4886
+04:46:57 AM process ID 4886 running 
+04:46:57 AM Logical clock: 12.231 seconds 
+04:46:57 AM process 11: last run time set to:    12.23
+04:46:57 AM process count is 12
+04:46:57 AM forking process number 12 
+04:46:57 AM forked process ID 4887 for process 12
+04:46:57 AM Starting mew process PID 4887
+04:46:57 AM process ID 4887 running 
+04:46:57 AM Logical clock: 13.696 seconds 
+04:46:57 AM process 12: last run time set to:    13.70
+04:47:13 AM 
+Timer Elapsed-C
+04:47:13 AM cleaning up
+04:47:13 AM removed semaphore
+04:50:11 AM process count is 0
+04:50:11 AM forking process number 0 
+04:50:11 AM forked process ID 5015 for process 00
+04:50:11 AM Starting mew process PID 5015
+04:50:11 AM Logical clock: 1.851 seconds 
+04:50:11 AM process ID 5015 running 
+04:50:11 AM process 00: last run time set to:     1.85
+04:50:11 AM process count is 1
+04:50:11 AM forking process number 1 
+04:50:12 AM forked process ID 5016 for process 01
+04:50:12 AM Starting mew process PID 5016
+04:50:12 AM Logical clock: 2.427 seconds 
+04:50:12 AM process ID 5016 running 
+04:50:12 AM process count is 2
+04:50:12 AM process 01: last run time set to:     2.43
+04:50:12 AM forking process number 2 
+04:50:12 AM forked process ID 5017 for process 02
+04:50:12 AM Starting mew process PID 5017
+04:50:12 AM Logical clock: 3.847 seconds 
+04:50:12 AM process ID 5017 running 
+04:50:12 AM process count is 3
+04:50:12 AM process 02: last run time set to:     3.85
+04:50:12 AM forking process number 3 
+04:50:12 AM forked process ID 5018 for process 03
+04:50:12 AM Starting mew process PID 5018
+04:50:12 AM Logical clock: 4.132 seconds 
+04:50:12 AM process ID 5018 running 
+04:50:12 AM process count is 4
+04:50:12 AM process 03: last run time set to:     4.13
+04:50:12 AM forking process number 4 
+04:50:12 AM forked process ID 5019 for process 04
+04:50:12 AM Starting mew process PID 5019
+04:50:12 AM Logical clock: 5.904 seconds 
+04:50:13 AM process ID 5019 running 
+04:50:13 AM process count is 5
+04:50:13 AM process 04: last run time set to:     5.90
+04:50:13 AM forking process number 5 
+04:50:13 AM process 4 using 30 of quantum
+04:50:13 AM forked process ID 5020 for process 05
+04:50:13 AM Starting mew process PID 5020
+04:50:13 AM Logical clock: 6.622 seconds 
+04:50:13 AM process ID 5020 running 
+04:50:13 AM process count is 6
+04:50:13 AM process 05: last run time set to:     6.62
+04:50:13 AM process 5 using 30 of quantum
+04:50:13 AM forking process number 6 
+04:50:13 AM forked process ID 5021 for process 06
+04:50:13 AM Starting mew process PID 5021
+04:50:13 AM Logical clock: 7.704 seconds 
+04:50:13 AM process ID 5021 running 
+04:50:13 AM process count is 7
+04:50:13 AM process 06: last run time set to:     7.70
+04:50:13 AM forking process number 7 
+04:50:14 AM process 6 using 30 of quantum
+04:50:14 AM forked process ID 5022 for process 07
+04:50:14 AM Starting mew process PID 5022
+04:50:14 AM Logical clock: 8.51 seconds 
+04:50:14 AM process ID 5022 running 
+04:50:14 AM process count is 8
+04:50:14 AM process 07: last run time set to:     8.05
+04:50:14 AM forking process number 8 
+04:50:14 AM process 7 using 72 of quantum
+04:50:14 AM forked process ID 5023 for process 08
+04:50:14 AM Starting mew process PID 5023
+04:50:14 AM Logical clock: 9.147 seconds 
+04:50:14 AM process ID 5023 running 
+04:50:14 AM process count is 9
+04:50:14 AM process 08: last run time set to:     9.15
+04:50:14 AM forking process number 9 
+04:50:14 AM process 8 using 72 of quantum
+04:50:14 AM forked process ID 5024 for process 09
+04:50:14 AM Starting mew process PID 5024
+04:50:14 AM Logical clock: 10.452 seconds 
+04:50:14 AM process ID 5024 running 
+04:50:14 AM process count is 10
+04:50:15 AM process 09: last run time set to:    10.45
+04:50:15 AM forking process number 10 
+04:50:15 AM process 9 using 72 of quantum
+04:50:15 AM forked process ID 5025 for process 10
+04:50:15 AM Starting mew process PID 5025
+04:50:15 AM Logical clock: 11.72 seconds 
+04:50:15 AM process ID 5025 running 
+04:50:15 AM process count is 11
+04:50:15 AM process 10: last run time set to:    11.07
+04:50:15 AM forking process number 11 
+04:50:15 AM forked process ID 5026 for process 11
+04:50:15 AM Starting mew process PID 5026
+04:50:15 AM Logical clock: 12.123 seconds 
+04:50:15 AM process ID 5026 running 
+04:50:15 AM process count is 12
+04:50:15 AM process 11: last run time set to:    12.12
+04:50:15 AM forking process number 12 
+04:50:15 AM forked process ID 5028 for process 12
+04:50:15 AM Starting mew process PID 5028
+04:50:15 AM Logical clock: 13.627 seconds 
+04:50:15 AM process ID 5028 running 
+04:50:15 AM process count is 13
+04:50:15 AM process 12: last run time set to:    13.63
+04:50:16 AM forking process number 13 
+04:50:16 AM forked process ID 5029 for process 13
+04:50:16 AM Starting mew process PID 5029
+04:50:16 AM Logical clock: 14.600 seconds 
+04:50:16 AM process ID 5029 running 
+04:50:16 AM process count is 14
+04:50:16 AM process 13: last run time set to:    14.60
+04:50:16 AM forking process number 14 
+04:50:16 AM process 13 using 73 of quantum
+04:50:16 AM forked process ID 5030 for process 14
+04:50:16 AM Starting mew process PID 5030
+04:50:16 AM Logical clock: 15.141 seconds 
+04:50:16 AM process ID 5030 running 
+04:50:16 AM process count is 15
+04:50:16 AM process 14: last run time set to:    15.14
+04:50:16 AM forking process number 15 
+04:50:16 AM process 14 using 73 of quantum
+04:50:16 AM forked process ID 5031 for process 15
+04:50:16 AM Starting mew process PID 5031
+04:50:16 AM Logical clock: 16.255 seconds 
+04:50:16 AM process ID 5031 running 
+04:50:16 AM process count is 16
+04:50:16 AM process 15: last run time set to:    16.25
+04:50:17 AM forking process number 16 
+04:50:17 AM process 15 using 73 of quantum
+04:50:17 AM forked process ID 5032 for process 16
+04:50:17 AM Starting mew process PID 5032
+04:50:17 AM Logical clock: 17.469 seconds 
+04:50:17 AM process ID 5032 running 
+04:50:17 AM process count is 17
+04:50:17 AM process 16: last run time set to:    17.47
+04:50:17 AM forking process number 17 
+04:50:17 AM process 16 using 35 of quantum
+04:50:17 AM forked process ID 5033 for process 17
+04:50:17 AM Starting mew process PID 5033
+04:50:17 AM Logical clock: 18.875 seconds 
+04:50:17 AM process ID 5033 running 
+04:50:17 AM process count is 18
+04:50:17 AM process 17: last run time set to:    18.88
+04:50:17 AM process 17 using 35 of quantum
+04:50:17 AM Logical clock: 19.981 seconds 
+04:50:17 AM process ID 5019 running 
+04:50:17 AM process count is 18
+04:50:17 AM process 04: last run time set to:    19.98
+04:50:18 AM process 4 using 97 of quantum
+04:50:18 AM Logical clock: 20.97 seconds 
+04:50:18 AM process ID 5020 running 
+04:50:18 AM process count is 18
+04:50:18 AM process 05: last run time set to:    20.10
+04:50:18 AM process 5 using 97 of quantum
+04:50:18 AM Logical clock: 21.64 seconds 
+04:50:18 AM process ID 5015 running 
+04:50:18 AM process count is 18
+04:50:18 AM process 00: last run time set to:    21.06
+04:50:18 AM process 0 using 46 of quantum
+04:50:18 AM Logical clock: 22.1000 seconds 
+04:50:18 AM process ID 5015 running 
+04:50:18 AM process count is 18
+04:50:18 AM process 00: last run time set to:    23.00
+04:50:18 AM Logical clock: 23.243 seconds 
+04:50:18 AM process ID 5021 running 
+04:50:18 AM process count is 18
+04:50:18 AM process 06: last run time set to:    23.24
+04:50:18 AM process 6 using 97 of quantum
+04:50:18 AM Logical clock: 24.889 seconds 
+04:50:18 AM process ID 5016 running 
+04:50:19 AM process count is 18
+04:50:19 AM process 01: last run time set to:    24.89
+04:50:19 AM process 1 using 122 of quantum
+04:50:19 AM Logical clock: 25.868 seconds 
+04:50:19 AM process ID 5022 running 
+04:50:19 AM process 07: last run time set to:    25.87
+04:50:19 AM process count is 18
+04:50:19 AM process 7 using 187 of quantum
+04:50:19 AM Logical clock: 26.669 seconds 
+04:50:19 AM process ID 5023 running 
+04:50:19 AM process count is 18
+04:50:19 AM process 08: last run time set to:    26.67
+04:50:19 AM process 8 using 187 of quantum
+04:50:19 AM Logical clock: 27.840 seconds 
+04:50:19 AM process ID 5024 running 
+04:50:19 AM process count is 18
+04:50:19 AM process 09: last run time set to:    27.84
+04:50:19 AM process 9 using 187 of quantum
+04:50:19 AM Logical clock: 28.802 seconds 
+04:50:19 AM process ID 5032 running 
+04:50:19 AM process count is 18
+04:50:19 AM process 16: last run time set to:    28.80
+04:50:20 AM process 16 using 84 of quantum
+04:50:20 AM Logical clock: 29.462 seconds 
+04:50:20 AM process ID 5029 running 
+04:50:20 AM process count is 18
+04:50:20 AM process 13: last run time set to:    29.46
+04:50:20 AM process 13 using 127 of quantum
+04:50:20 AM Logical clock: 30.434 seconds 
+04:50:20 AM process ID 5017 running 
+04:50:20 AM process count is 18
+04:50:20 AM process 02: last run time set to:    30.43
+04:50:20 AM process 2 using 122 of quantum
+04:50:20 AM Logical clock: 31.939 seconds 
+04:50:20 AM process ID 5018 running 
+04:50:20 AM process count is 18
+04:50:20 AM process 03: last run time set to:    31.94
+04:50:20 AM process 3 using 122 of quantum
+04:50:20 AM Logical clock: 32.664 seconds 
+04:50:20 AM process ID 5033 running 
+04:50:20 AM process count is 18
+04:50:20 AM process 17: last run time set to:    32.66
+04:50:21 AM process 17 using 84 of quantum
+04:50:21 AM Logical clock: 33.860 seconds 
+04:50:21 AM process ID 5030 running 
+04:50:21 AM process count is 18
+04:50:21 AM process 14: last run time set to:    33.86
+04:50:21 AM process 14 using 127 of quantum
+04:50:21 AM Logical clock: 34.137 seconds 
+04:50:21 AM process ID 5031 running 
+04:50:21 AM process count is 18
+04:50:21 AM process 15: last run time set to:    34.14
+04:50:21 AM process 15 using 127 of quantum
+04:50:21 AM Logical clock: 35.147 seconds 
+04:50:21 AM process ID 5031 running 
+04:50:21 AM process count is 18
+04:50:21 AM process 15: last run time set to:    35.15
+04:50:21 AM process 15 using 5 of quantum
+04:50:21 AM Logical clock: 36.763 seconds 
+04:50:21 AM process ID 5031 running 
+04:50:22 AM process count is 18
+04:50:22 AM process 15: last run time set to:    36.76
+04:50:22 AM process 15 using 40 of quantum
+04:50:22 AM Logical clock: 37.759 seconds 
+04:50:22 AM process ID 5025 running 
+04:50:22 AM process 10: last run time set to:    37.76
+04:50:22 AM process count is 18
+04:50:22 AM process 10 using 160 of quantum
+04:50:22 AM Logical clock: 38.850 seconds 
+04:50:22 AM process ID 5026 running 
+04:50:22 AM process count is 18
+04:50:22 AM process 11: last run time set to:    38.85
+04:50:22 AM process 11 using 160 of quantum
+04:50:22 AM Logical clock: 39.166 seconds 
+04:50:22 AM process ID 5019 running 
+04:50:22 AM process count is 18
+04:50:22 AM process 04: last run time set to:    39.17
+04:50:22 AM process 4 using 109 of quantum
+04:50:22 AM Logical clock: 40.257 seconds 
+04:50:22 AM process ID 5019 running 
+04:50:23 AM process count is 18
+04:50:23 AM process 04: last run time set to:    40.26
+04:50:23 AM process 4 using 26 of quantum
+04:50:23 AM Logical clock: 41.654 seconds 
+04:50:23 AM process ID 5019 running 
+04:50:23 AM process count is 18
+04:50:23 AM process 04: last run time set to:    41.65
+04:50:23 AM process 4 using 18 of quantum
+04:50:23 AM Logical clock: 42.589 seconds 
+04:50:23 AM process ID 5028 running 
+04:50:23 AM process count is 18
+04:50:23 AM process 12: last run time set to:    42.59
+04:50:23 AM process 12 using 160 of quantum
+04:50:23 AM Logical clock: 43.379 seconds 
+04:50:23 AM process ID 5020 running 
+04:50:23 AM process count is 18
+04:50:23 AM process 05: last run time set to:    43.38
+04:50:23 AM process 5 using 109 of quantum
+04:50:23 AM Logical clock: 44.280 seconds 
+04:50:23 AM process ID 5020 running 
+04:50:23 AM process count is 18
+04:50:23 AM process 05: last run time set to:    44.28
+04:50:24 AM process 5 using 26 of quantum
+04:50:24 AM Logical clock: 45.189 seconds 
+04:50:24 AM process ID 5020 running 
+04:50:24 AM process count is 18
+04:50:24 AM process 05: last run time set to:    45.19
+04:50:24 AM process 5 using 18 of quantum
+04:50:24 AM Logical clock: 46.519 seconds 
+04:50:24 AM process ID 5020 running 
+04:50:24 AM process count is 18
+04:50:24 AM process 05: last run time set to:    46.52
+04:50:24 AM process 5 using 32 of quantum
+04:50:24 AM Logical clock: 47.886 seconds 
+04:50:24 AM process ID 5021 running 
+04:50:24 AM process count is 18
+04:50:24 AM process 06: last run time set to:    47.89
+04:50:24 AM process 6 using 109 of quantum
+04:50:24 AM Logical clock: 48.9 seconds 
+04:50:24 AM process ID 5032 running 
+04:50:24 AM process count is 18
+04:50:24 AM process 16: last run time set to:    48.01
+04:50:25 AM process 16 using 87 of quantum
+04:50:25 AM Logical clock: 49.746 seconds 
+04:50:25 AM process ID 5032 running 
+04:50:25 AM process 16: last run time set to:    49.75
+04:50:25 AM process count is 18
+04:50:25 AM process 16 using 126 of quantum
+04:50:25 AM Logical clock: 50.218 seconds 
+04:50:25 AM process ID 5022 running 
+04:50:25 AM process count is 18
+04:50:25 AM process 07: last run time set to:    50.22
+04:50:25 AM process 7 using 181 of quantum
+04:50:25 AM Logical clock: 51.457 seconds 
+04:50:25 AM process ID 5022 running 
+04:50:25 AM process count is 18
+04:50:25 AM process 07: last run time set to:    51.46
+04:50:25 AM process 7 using 162 of quantum
+04:50:25 AM process 07 ran 500 or more milliseconds...exiting
+04:50:25 AM Logical clock: 52.161 seconds 
+04:50:25 AM process ID 5015 running 
+04:50:25 AM process 00: last run time set to:    52.16
+04:50:26 AM process 0 using 21 of quantum
+04:50:31 AM 
+Timer Elapsed-C
+04:50:31 AM cleaning up
+04:50:31 AM removed semaphore
+04:51:52 AM process count is 0
+04:51:52 AM forking process number 0 
+04:51:53 AM forked process ID 5132 for process 00
+04:51:53 AM Starting mew process PID 5132
+04:51:53 AM Logical clock: 1.614 seconds 
+04:51:53 AM process ID 5132 running 
+04:51:53 AM process count is 1
+04:51:53 AM process 00: last run time set to:     1.61
+04:51:53 AM forking process number 1 
+04:51:53 AM forked process ID 5133 for process 01
+04:51:53 AM Starting mew process PID 5133
+04:51:53 AM Logical clock: 2.359 seconds 
+04:51:53 AM process ID 5133 running 
+04:51:53 AM process 01: last run time set to:     2.36
+04:51:53 AM process count is 2
+04:51:53 AM forking process number 2 
+04:51:53 AM forked process ID 5134 for process 02
+04:51:53 AM Starting mew process PID 5134
+04:51:53 AM Logical clock: 3.743 seconds 
+04:51:53 AM process ID 5134 running 
+04:51:53 AM process 02: last run time set to:     3.74
+04:51:53 AM process count is 3
+04:51:53 AM forking process number 3 
+04:51:53 AM forked process ID 5135 for process 03
+04:51:53 AM Starting mew process PID 5135
+04:51:53 AM Logical clock: 4.733 seconds 
+04:51:53 AM process ID 5135 running 
+04:51:54 AM process count is 4
+04:51:54 AM process 03: last run time set to:     4.73
+04:51:54 AM forking process number 4 
+04:51:54 AM forked process ID 5136 for process 04
+04:51:54 AM Starting mew process PID 5136
+04:51:54 AM Logical clock: 5.601 seconds 
+04:51:54 AM process ID 5136 running 
+04:51:54 AM process count is 5
+04:51:54 AM process 04: last run time set to:     5.60
+04:51:54 AM forking process number 5 
+04:51:54 AM process 4 using 122 of quantum
+04:51:54 AM forked process ID 5137 for process 05
+04:51:54 AM Starting mew process PID 5137
+04:51:54 AM Logical clock: 6.736 seconds 
+04:51:54 AM process ID 5137 running 
+04:51:54 AM process count is 6
+04:51:54 AM process 05: last run time set to:     6.74
+04:51:54 AM forking process number 6 
+04:51:54 AM process 5 using 122 of quantum
+04:51:54 AM forked process ID 5138 for process 06
+04:51:54 AM Starting mew process PID 5138
+04:51:54 AM Logical clock: 7.729 seconds 
+04:51:54 AM process ID 5138 running 
+04:51:54 AM process count is 7
+04:51:54 AM process 06: last run time set to:     7.73
+04:51:55 AM forking process number 7 
+04:51:55 AM process 6 using 122 of quantum
+04:51:55 AM forked process ID 5139 for process 07
+04:51:55 AM Starting mew process PID 5139
+04:51:55 AM Logical clock: 8.885 seconds 
+04:51:55 AM process ID 5139 running 
+04:51:55 AM process count is 8
+04:51:55 AM process 07: last run time set to:     8.89
+04:51:55 AM forking process number 8 
+04:51:55 AM process 7 using 38 of quantum
+04:51:55 AM forked process ID 5140 for process 08
+04:51:55 AM Starting mew process PID 5140
+04:51:55 AM Logical clock: 9.609 seconds 
+04:51:55 AM 
+Caught CONTROL-C
+04:51:55 AM cleaning up
+04:51:55 AM removed semaphore

@@ -1,0 +1,39 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.01.31.03.44.29;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@$Name$ Jon Sherwood
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#ifndef _LIBLOGGER_H_
+#define _LIBLOGGER_H_
+#include <time.h>
+typedef struct data_struct {
+	time_t time;
+	char *string;
+} data_t;
+
+int addmsg (data_t data);
+void clearlog (void);
+char *getlog (void);
+int savelog (char *filename);
+void loginput (char *cmd);
+#endif
+@

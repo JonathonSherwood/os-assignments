@@ -1,0 +1,239 @@
+head	1.1;
+access;
+symbols;
+locks
+	name:1.1; strict;
+comment	@ * @;
+
+
+1.1
+date	2016.03.17.19.55.17;	author name;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#include <ctype.h>
+#include <fcntl.h>
+#include <stdio.h>                               // printf()
+#include <stdlib.h>                              // exit()
+#include <time.h>                                // time()
+#include <wait.h>                                // time()
+#include <unistd.h>
+#include <string.h>                              // sleep(), etc.
+#include <errno.h>                               // perror()
+// #include <sys/ipc.h>                             // Inter-process communication
+#include <sys/shm.h>                             // Shared memory
+#include <sys/sem.h>                             // Semaphores
+
+#define DEFAULT_NUM_CHILD 18
+#define DEFAULT_CPU_ALLOC_HIGH_PRIORITY 80
+#define FILE_FLAGS (O_CREAT |O_RDWR |O_APPEND|O_SYNC)
+#define GLOBAL_TIMEOUT 20
+
+int child_pid[DEFAULT_NUM_CHILD];		             // Array of PIDs for child processes
+
+char msgstr[50];
+int signum;                                      // Hold a signal number
+int mynum;
+int shmid_ptr;                                  // Shared memory ID
+int semid_clock;                                 // Semaphore ID for logical clock
+int child_sel;                               // Selected child to fork
+int semid_clock;                                 // Clock semaphore ID
+
+int shmid_slave;                                  // Shared memory ID
+int semid_slave;                                 // Semaphore ID for logical clock
+int semid_res;                                   // Semaphore ID for resources
+
+typedef struct {
+	unsigned int clock_sec;                              // Clock seconds
+	unsigned int clock_nano;                             // Nanoseconds since the last clock second
+    unsigned long oss_sys_time;
+    // FOR CHILD
+
+    unsigned int quantum[DEFAULT_NUM_CHILD];             // PID and Quantum used to dispatch children
+    // FOR OSS
+
+    int child_running[DEFAULT_NUM_CHILD];                // Run status of fork'd children
+	int wait_time[DEFAULT_NUM_CHILD];                    // Accumulator for child wait time
+	unsigned long total_cpu_time[DEFAULT_NUM_CHILD];     //     total CPU time used
+	unsigned long total_sys_time[DEFAULT_NUM_CHILD];     //     total time in the system
+    int priority;                                        //     process priority, if any.
+    unsigned int last_runtime[DEFAULT_NUM_CHILD];        //     time used during the last burst
+
+} pcb_t;
+
+pcb_t *pcb;
+
+
+void writelog (char *msg) {
+    time_t now;
+	time (&now);
+	char *timestr = (char *) malloc (12);
+    strftime (timestr, 12, "%r", localtime (&now));
+    char tmp[strlen(timestr)+strlen(msg)+2];
+    sprintf (tmp,"%s %s\n",timestr,msg);
+    int fd = open ("cstest", FILE_FLAGS, 0777);
+	if (fd < 0) {
+		perror ("writelog: open failed");
+		exit (EXIT_FAILURE);
+	}
+    // in case of any buffer issues
+	write (fd, tmp, strlen (tmp));            // write to file
+	write (STDOUT_FILENO, tmp, strlen (tmp)); // write to terminal
+	close (fd);
+}
+
+
+
+int term_proc (int child, int sig) {
+	int status;
+	kill (child_pid[child], sig);
+	wait (&status);
+    if( status!=0) {
+        sprintf(msgstr,"Child #%2d returned %d", child,status);
+        perror(msgstr);
+        writelog (msgstr);
+
+    }
+	return WEXITSTATUS (status);
+}
+
+// Terminate all descendant processes and free shared memory
+void cleanup (int termsig) {
+
+    sprintf(msgstr,"Executing cleanup()");
+    writelog (msgstr);
+	int i;
+	for (i = 0; i < DEFAULT_NUM_CHILD; i++) {
+		if (pcb->child_running[i] > 0) {
+            term_proc (i, termsig);
+		}
+	}
+
+	// Release shared memory
+	int ipcd_ret = shmctl (shmid_ptr, IPC_RMID, (struct shmid_ds *) NULL);
+	if (ipcd_ret != 0) {
+        sprintf (msgstr, "Error releasing shared memory - please clear manually");
+        perror(msgstr);
+        writelog (msgstr);
+	} else {
+        sprintf (msgstr,"Executing cleanup()");
+        writelog (msgstr);
+	}
+
+	// Remove clock semaphore
+	if ( (semctl (semid_clock, 0, IPC_RMID, 1) == -1) && (errno != EINTR)) {
+		sprintf (msgstr, "oss: cleanup->semctl (clock)");
+		perror (msgstr);
+        writelog (msgstr);
+	} else {
+        sprintf (msgstr, "Removed clock semaphore successfully");
+        writelog ("Removed clock semaphore successfully");
+	}
+
+
+
+}
+
+
+char *current_dir() {
+	// get size of path
+	long size = pathconf (".", _PC_PATH_MAX);
+	char *buf;
+	char *ptr;
+
+	if ( (buf = (char *) malloc ( (size_t) size)) != NULL) {
+		if ( (ptr = getcwd (buf, (size_t) size)) == NULL) {
+			perror ("getcwd");
+			exit (EXIT_FAILURE);
+		}
+	} else {
+		perror ("buf");
+		exit (EXIT_FAILURE);
+	}
+
+	return ptr;
+}
+
+// Catch signals
+void sigproc (int sig) {
+	signum = sig;
+}
+int sigcheck() {
+	signal (SIGINT, sigproc);
+	signal (SIGTERM, sigproc);
+	if (signum == 2 || signum == 15) {
+		if (signum == 2) {
+            // fprintf (stderr,  "slave %02d: Caught CTRL-C (SIGINT)", mynum);
+            sprintf (msgstr,  "slave %02d: Caught CTRL-C (SIGINT)", mynum);
+            writelog(msgstr);
+		} else if (signum == 15) {
+			fprintf (stderr, "slave %02d: Caught SIGTERM", mynum);
+		}
+		return 1;
+	}
+	return 0;
+}
+
+void alarm_handler() {
+	fprintf (stderr, "\nTimer Elapsed\n");
+	cleanup (SIGINT);
+}
+
+
+
+// Semaphore wait function
+void sem_wait (int semid) {
+	struct sembuf sbuf;    // Semaphore operation struct
+	sbuf.sem_num = 0;      // First (and only) semaphore in set
+	sbuf.sem_op = -1;      // Decrement the semaphore
+	sbuf.sem_flg = 0;      // Operation flag
+
+	if (semop (semid, &sbuf, 1) == -1)  {
+		if (errno == EINTR) {
+			// A signal was received, check it
+			if (sigcheck()) {
+				cleanup (signum);
+				exit (0);
+			}
+		} else {
+			sprintf (msgstr, "oss: sem_wait->semop (semid: %d", semid);
+			perror (msgstr);
+			cleanup (SIGTERM);
+			exit (1);
+		}
+	}
+}
+
+// Semaphore signal function
+void sem_signal (int semid) {
+	struct sembuf sbuf;    // Semaphore operation struct
+	sbuf.sem_num = 0;      // First (and only) semaphore in set
+	sbuf.sem_op  = 1;      // Increment the semaphore
+	sbuf.sem_flg = 0;      // Operation flag
+
+	if (semop (semid, &sbuf, 1) == -1)  {
+		if (errno == EINTR) {
+			// A signal was received, check it
+			if (sigcheck()) {
+				sprintf (msgstr, "Received signal %d - exiting...", signum);
+				writelog (msgstr);
+				exit (0);
+			}
+		} else {
+			sprintf (msgstr, "oss: sem_wait->semop (semid: %d", semid);
+			perror (msgstr);
+			exit (1);
+		}
+	}
+}
+@

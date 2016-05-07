@@ -1,0 +1,143 @@
+
+
+JON SHERWOOD 
+CS 4760 - OPERATING SYSTEMS 
+ASSIGNMENT #4: PROCESS SCHEDULING
+DUE: MARCH 23, 2016
+---------------------------------------------------------------------------
+OVERVIEW: In this project, you will simulate the process scheduling
+part of an operating system. You will implement time-based scheduling,
+ignoring almost every other aspect of the OS.
+
+FILES: oss.c slave.c shared.h
+
+BUILD:
+    "make"  [Or "make clean" to remove binary, logfile("cstest"), and objects]
+
+RUN:
+    "./oss"
+
+NOTE:	queues not implemented. 
+
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+
+
+
+OSS:
+    1 SHARED MEMORY
+
+	        PROCESS CONTROL BLOCK : allocate space for <=18 PCBs
+
+		        total CPU time used
+                total time in the system
+                time used during the last burst 
+                process priority, if any.
+
+
+                1 PROCESS IDENTIFICATION
+                2 PROCESS STATUS the current status of the job [HOLD, READY, RUNNING, WAITING]
+                3 PROCESS STATE:
+                    Process status word
+                    Register contents
+                    Main memory
+                    Resources
+                    Process priority
+                4 ACCOUNTING
+
+    2 ENTERS A LOOP
+
+        DECLARE & INIT PCB
+    		keep info about recent cpu_time usage of a process:
+
+
+    3  LOGICAL CLOCK: [CRITICAL RESOURCES]
+    - incremented in terms of nanoseconds. rand [0-50000]
+            2 unsigned ints: 
+                seconds 
+                nanoseconds(offset from the beginning of a second. ) 
+
+
+        Advance the logical clock by 1.xx seconds in
+		each iteration of the loop where xx is the number of nanoseconds. xx
+		will be a random number in the interval [0,1000]
+		to simulate some overhead activity for each iteration.
+
+        BIT VECTOR: keep track of the process control blocks (or
+        process IDs) that are already taken.
+
+
+    3 FORK CHILDREN: random intervals [1 second on an average]
+	    Generated process if clock time to execl has passed time create
+	    new process. [seconds = random [0 - 2] If your clock has passed
+	    this time since the creation of last process, generate a new
+	    process (and execl it). If the process table is already full,
+	    do not generate any more processes.
+
+
+    4 SCHEDULING ALGORITHM:
+    	oss will select the process and schedule it for execution.
+
+	MULTI-LEVEL SCHEDULING.
+        3 QUEUES:
+			HIGH-PRIORITY QUEUE (0)  - Shortest Job First (SJF)
+		                               I/O-bound [longer CPU bursts]
+            
+			MEDIUM PRIORITY QUEUE(1) - Shortest Job First (SJF)
+                                       I/O-bound [longer CPU bursts]
+			LOW-PRIORITY QUEUE (2)	 - round-robin.	 (RR)
+		                               CPU-bound [short  CPU bursts]
+
+	TIME SLICES
+	    Move process to next queue [0 → 1 → 2 → 0] when
+	    time-slice used up
+
+	The main parameters you can adjust are the
+	    ratio of CPU time allocated to high-priority queue vs
+	    low-priority queue how you decide which queue a process
+	    should be placed.
+
+
+	the process will be dispatched by putting [shared memory]
+	    the process id the time quantum
+
+
+	User process will pick up the quantum value from the shared
+	memory and schedule itself to run for that long a time.
+
+---------------------------------------------------------------------------
+
+CHILD PROCESSES
+
+
+    - don't actually wait 50 ms 
+
+    1 .Check in shared memory if it has been scheduled
+
+    2. Generate a random number to check if it will use the entire quantum
+       (a binary random number will be sufficient for this purpose).
+
+    3. If it uses only a part of the quantum, Generate a random number
+       [0 - quantum] to see how long it runs.
+       Child adds its used part of the quantum to nanoseconds time.
+
+    4. After its allocated time (completed or partial),
+        - update process control block by adding to the accumulated CPU time.
+        - then joins the ready queue at that point and sends a signal on a
+          semaphore so that oss can schedule another process.
+
+    While running, generate a random number
+    again to see if the process is completed. This should be clear_pcb if the
+    process has accumulated at least 50 milliseconds. The
+    message should be conveyed to oss who should remove its process control
+    block.  Your simulation should end with a report on average turnaround
+    time and average wait time for the processes. Also include how long the
+    CPU was idle.
+
+
+TURNIN:
+
+    chmod 700 username.4 cp -p -r username.4 ˜hauschild/cs4760/assignment3
+
+

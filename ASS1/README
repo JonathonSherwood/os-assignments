@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+AUTHOR: Jon Sherwood
+DATE: 		February 10, 2016
+PROJ:		Homework #1
+FILES:		liblogger.c liblogger.h logtest.c 
+
+-------------------------------------------------------------------------------
+
+	
+OVERVIEW:
+This homework was to become familiar with the environment in hoare while
+practicing system calls by implementing a logging utility based on a  template
+in the UNIX Systems Programming.  We were assigned to create a library 
+archive of the logging utility and show its use in a program that links this 
+library (file "logtest.c" ).
+
+
+Compile with the "make" utility. The main executable is name "logger" .
+
+
